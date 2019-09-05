@@ -17,14 +17,17 @@ class DestinationIndex extends React.Component {
   }
 
   render() {
-      console.log(this.state)
+    {this.state.res && console.log(this.state.res.data[0].address)}
       return (
         <section className="section">
-          <h1>Testing React Setup</h1>
+          {!this.state.res && <h2 className="title is-2">Loading...</h2>}
+          {this.state.res && <h1>{this.state.res.data[0].address}</h1>}
         </section>
       )
     }
   }
+
+
 
 
   export default DestinationIndex

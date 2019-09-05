@@ -7,10 +7,6 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import DestinationIndex from './components/destinations/DestinationIndex'
 
 class App extends React.Component {
-  componentDidMount() {
-    axios.get('/api/destinations')
-      .then(res => console.log(res.data))
-  }
 
   render() {
     return (
