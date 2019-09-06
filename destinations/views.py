@@ -1,24 +1,30 @@
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from .models import Category, Destination
 from .serializers import CategorySerializer, DestinationSerializer
 
 class CategoryList(ListCreateAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class DestinationList(ListCreateAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Destination.objects.all()
     serializer_class = DestinationSerializer
 
 
 class DestinationDetail(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Destination.objects.all()
     serializer_class = DestinationSerializer
 

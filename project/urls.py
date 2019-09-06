@@ -18,8 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
 
-    path('admin-super/', admin.site.urls),
-    path('admin/', include('rest_framework.urls')),
+    path('django-admin/', admin.site.urls),
+    path('auth/', include('rest_framework.urls')),
     path('api/', include('destinations.urls')),
     path('api/', include('jwt_auth.urls')),
     path('', include('frontend.urls'))

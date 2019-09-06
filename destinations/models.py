@@ -1,4 +1,5 @@
 from django.db import models
+import User
 
 class Category(models.Model):
     category = models.CharField(max_length=50, unique=True)
@@ -15,7 +16,8 @@ class Destination(models.Model):
     cost = models.IntegerField(null=True)
     image = models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=5000)
-    categories = models.ManyToManyField(Category, related_name='destinations', blank=True)
+    categories = models.ManyToManyField(Category, related_name='destinations')
+    user = models.ForeignKey(User, related_name='destinations', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
