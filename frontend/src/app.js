@@ -13,6 +13,8 @@ class App extends React.Component {
       <HashRouter>
         <Switch>
           <Route path="/destinations" component={DestinationIndex} />
+          <Route path="/login" component={DestinationIndex} />
+          <Route path="/register" component={DestinationIndex} />
         </Switch>
       </HashRouter>
 
