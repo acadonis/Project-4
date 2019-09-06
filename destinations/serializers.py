@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from jwt_auth.serializers import UserSerializer
 from .models import Category, Destination
+
 
 class NestedCategorySerializer(serializers.ModelSerializer):
 
@@ -9,11 +11,14 @@ class NestedCategorySerializer(serializers.ModelSerializer):
 
 class NestedDestinationSerializer(serializers.ModelSerializer):
 
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Destination
-        fields = ('id', 'name', 'airport', 'address', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories',)
+        fields = ('id', 'name', 'airport', 'address', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
 
 class CategorySerializer(serializers.ModelSerializer):
+
     destinations = NestedDestinationSerializer(many=True)
 
     class Meta:
@@ -21,8 +26,10 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'category', 'destinations')
 
 class DestinationSerializer(serializers.ModelSerializer):
+
     categories = NestedCategorySerializer(many=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Destination
-        fields = ('id', 'name', 'airport', 'address', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories',)
+        fields = ('id', 'name', 'airport', 'address', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
