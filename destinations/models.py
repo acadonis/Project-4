@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     category = models.CharField(max_length=50, unique=True)
+    user = models.ForeignKey(User, related_name='categories', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.category
@@ -16,8 +17,10 @@ class Destination(models.Model):
     cost = models.IntegerField(null=True)
     image = models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=5000)
+
     categories = models.ManyToManyField(Category, related_name='destinations')
-    user = models.ForeignKey(User, related_name='destinations', on_delete=models.CASCADE)
+
+    user = models.ForeignKey(User, related_name='destinations', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name

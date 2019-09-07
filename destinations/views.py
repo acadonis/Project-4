@@ -14,7 +14,7 @@ class CategoryList(ListCreateAPIView):
 
 
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
