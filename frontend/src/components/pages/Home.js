@@ -19,12 +19,12 @@ function Home() {
         <div className="columns is-multiline">
           <div className="column">
             <Link to={'/search'}>
-              <h1 className="title is-3">Search for a holiday!</h1>
+              <h1 className="title is-3">Search for a low carbon holiday!</h1>
             </Link>
           </div>
           <div className="column">
             <Link to={'/destinations'}>
-              <h1 className="title is-3">Add a destination!</h1>
+              <h1 className="title is-3">Add a low carbon destination!</h1>
             </Link>
           </div>
         </div>
