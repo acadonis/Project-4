@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import axios from 'axios'
 import 'bulma'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 
@@ -12,6 +11,7 @@ class App extends React.Component {
     return (
       <HashRouter>
         <Switch>
+          <Route path="/home" component={Home} />
           <Route path="/destinations" component={DestinationIndex} />
           <Route path="/login" component={DestinationIndex} />
           <Route path="/register" component={DestinationIndex} />

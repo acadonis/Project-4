@@ -10,7 +10,7 @@ class Category(models.Model):
 
 class Destination(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    airport = models.CharField(max_length=3)
+    airport = models.CharField(max_length=3, null=True,)
     address = models.CharField(max_length=50)
     longitude = models.IntegerField(blank=True, null=True)
     latitude = models.IntegerField(blank=True, null=True)

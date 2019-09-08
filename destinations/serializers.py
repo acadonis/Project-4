@@ -5,6 +5,8 @@ from .models import Category, Destination
 
 class NestedCategorySerializer(serializers.ModelSerializer):
 
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Category
         fields = ('id', 'category', 'destinations', 'user',)
@@ -28,7 +30,6 @@ class CategorySerializer(serializers.ModelSerializer):
 class DestinationSerializer(serializers.ModelSerializer):
 
     categories = NestedCategorySerializer(many=True)
-    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Destination
