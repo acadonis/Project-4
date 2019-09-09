@@ -12,18 +12,15 @@ class CategoryList(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-
 class DestinationList(ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Destination.objects.all()
     serializer_class = DestinationSerializer
-
 
 class DestinationDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)

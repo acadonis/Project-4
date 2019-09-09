@@ -5,6 +5,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import DestinationIndex from './components/destinations/DestinationIndex'
 import DestinationSearch from './components/destinations/DestinationSearch'
 import Home from './components/pages/Home'
+import Register from './components/auth/Register'
 
 import './style.scss'
 
@@ -16,6 +17,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/search" component={DestinationSearch} />
           <Route path="/destinations/:categories/:cost/:airport" component={DestinationIndex} />
+          <Route path="/register" component={Register} />
           <Route exact path="/" component={Home} />
         </Switch>
       </HashRouter>
