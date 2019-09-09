@@ -1,31 +1,48 @@
 import React from 'react'
 import axios from 'axios'
+import Card from '../common/Card'
 
 class DestinationIndex extends React.Component {
 
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+
+    }
   }
 
   componentDidMount() {
     axios.get('/api/destinations')
-      .then(results => {
-        this.setState({ results })
+      .then(res => {
+        this.setState({ destinations: res.data })
       })
   }
 
   render() {
+    this.state.destinations && console.log(this.state)
 
     return (
-      <section className="section">
-        <div className="container">
-          {this.state.results && <h1>{this.state.results.data[0].address}</h1>}
-        </div>
-      </section>
+
+
+
+      <div className="container">
+        {this.state.destinations && this.state.destinations.map((destination, i) =>
+          <div key={i}>
+            <Card
+              {...destination}
+              // categories={destination.categories.category}
+            />
+          </div>
+        )}
+      </div>
+
     )
   }
 }
+
+// <section className="section">
+//   {this.state.result && <h1>{this.state.result.data[2].address}</h1>}
+// </section>
 
 
 export default DestinationIndex
