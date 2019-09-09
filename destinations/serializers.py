@@ -9,7 +9,7 @@ class NestedCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'category', 'destinations', 'user',)
+        fields = ('id', 'name', 'destinations', 'user',)
 
 class NestedDestinationSerializer(serializers.ModelSerializer):
 
@@ -25,7 +25,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'category', 'destinations', 'user',)
+        fields = ('id', 'name', 'destinations', 'user',)
 
 class DestinationSerializer(serializers.ModelSerializer):
 

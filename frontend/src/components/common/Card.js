@@ -8,7 +8,7 @@ const Card = ({ name, cost, airport, categories }) => {
         <h1>{cost}</h1>
         <h1>{airport}</h1>
         <ul>
-          {categories.map(category => <li key={category.id}>{category.category}</li>)}
+          {categories.map(category => <li key={category.id}>{category.name}</li>)}
         </ul>
       </div>
     </div>

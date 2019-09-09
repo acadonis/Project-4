@@ -30,7 +30,6 @@ class DestinationIndex extends React.Component {
           <div key={i}>
             <Card
               {...destination}
-              // categories={destination.categories.category}
             />
           </div>
         )}
