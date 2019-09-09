@@ -15,9 +15,7 @@ class App extends React.Component {
       <HashRouter>
         <Switch>
           <Route path="/search" component={DestinationSearch} />
-          <Route path="/destinations" component={DestinationIndex} />
-          <Route path="/login" component={DestinationIndex} />
-          <Route path="/register" component={DestinationIndex} />
+          <Route path="/destinations/:categories/:cost/:airport" component={DestinationIndex} />
           <Route exact path="/" component={Home} />
         </Switch>
       </HashRouter>

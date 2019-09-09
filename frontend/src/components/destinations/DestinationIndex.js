@@ -10,23 +10,22 @@ class DestinationIndex extends React.Component {
 
   componentDidMount() {
     axios.get('/api/destinations')
-      .then(res => {
-
-        this.setState({ res })
+      .then(results => {
+        this.setState({ results })
       })
   }
 
   render() {
-    {this.state.res && console.log(this.state.res.data[0].categories[0].category)}
+
     return (
       <section className="section">
-        {this.state.res && <h1>{this.state.res.data[0].address}</h1>}
+        <div className="container">
+          {this.state.results && <h1>{this.state.results.data[0].address}</h1>}
+        </div>
       </section>
     )
   }
 }
-
-
 
 
 export default DestinationIndex
