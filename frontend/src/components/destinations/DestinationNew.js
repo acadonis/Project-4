@@ -1,5 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
+import Rating from 'react-rating'
 import axios from 'axios'
 
 import { categories } from '../../lib/Categories'
@@ -11,8 +12,7 @@ class DestinationNew extends React.Component {
   constructor() {
     super()
     this.state = {
-      formData: {},
-      errors: {}
+      formData: {}
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -22,9 +22,8 @@ class DestinationNew extends React.Component {
 
   handleChange(e) {
     const formData = { ...this.state.formData, [e.target.name]: e.target.value }
-    const errors = { ...this.state.errors, [e.target.name]: '' }
 
-    this.setState({ formData, errors })
+    this.setState({ formData })
   }
 
   handleSubmit(e) {
@@ -33,124 +32,79 @@ class DestinationNew extends React.Component {
     axios.post('/api/destinations/', formData, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
-      .then(res => this.props.history.push(`/destinations/${res.data._id}`))
-      .catch(err => this.setState({ errors: err.response.data.errors }))
+      .then(this.props.history.push('/destinations/'))
+
   }
 
   handleCategoryChange(selectedCategories) {
-    const formData = { ...this.state.formData, categories: selectedCategories ? selectedCategories.map(option => option.value) : [] }
+    const formData = { ...this.state.formData,
+
+      categories: selectedCategories ? selectedCategories.map(option => option.value) : [] }
+
+
     this.setState({ formData })
   }
 
   render() {
     const selectedCategories = (this.state.formData.categories || [ ]).map(categories => ({ label: categories, value: categories }))
+
     return (
       <section className="section">
         <div className="container">
-          <h2 className="title is-2">Create</h2>
+          <h2 className="title is-3">Make a Destination!</h2>
           <form onSubmit={this.handleSubmit}>
             <div className="columns is-multiline">
-              <div className="column is-half-desktop">
+              <div className="column is-one-third-desktop is-one-third-tablet">
                 <div className="field">
                   <label className="label">Name</label>
                   <div className="control">
                     <input
                       className="input"
                       name="name"
-                      placeholder="eg tour of Spitalfields"
+                      placeholder="eg Walking in the Alps!"
                       onChange={this.handleChange}
                     />
                   </div>
-                  {this.state.errors.name && <small className="help is-danger">{this.state.errors.name}</small>}
                 </div>
                 <div className="field">
-                  <label className="label">City</label>
+                  <label className="label">Airport</label>
                   <div className="control">
                     <input
                       className="input"
-                      name="city"
-                      placeholder="eg London"
+                      name="airport"
+                      placeholder="eg LHR"
                       onChange={this.handleChange}
                     />
                   </div>
-                  {this.state.errors.city && <small className="help is-danger">{this.state.errors.city}</small>}
                 </div>
                 <div className="field">
-                  <label className="label">Postcode</label>
+                  <label className="label">Address</label>
                   <div className="control">
                     <input
                       className="input"
-                      name="postcode"
-                      placeholder="eg N1 4HY"
+                      name="address"
+                      placeholder="eg Cumbria"
                       onChange={this.handleChange}
                     />
                   </div>
-                  {this.state.errors.postcode && <small className="help is-danger">{this.state.errors.postcode}</small>}
-                  {((this.state.errors.lon || this.state.errors.lat) && !this.state.errors.postcode) && <small className="help is-danger">Please provide a valid UK postcode</small>}
                 </div>
                 <div className="field">
-                  <label className="label">Date</label>
+                  <label className="label">Image</label>
                   <div className="control">
                     <input
                       className="input"
-                      type="date"
-                      name="date"
-                      placeholder="eg 16/03/2020"
+                      name="image"
+                      placeholder="eg Cumbria"
                       onChange={this.handleChange}
                     />
                   </div>
-                  {this.state.errors.date && <small className="help is-danger">{this.state.errors.date}</small>}
                 </div>
                 <div className="field">
-                  <label className="label">Time</label>
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="time"
-                      name="time"
-                      placeholder="eg 09:30"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  {this.state.errors.time && <small className="help is-danger">{this.state.errors.time}</small>}
-                </div>
-              </div>
-              <div className="column is-half-desktop">
-                <div className="field">
-                  <label className="label">Description</label>
-                  <div className="control">
-                    <input
-                      className="input"
-                      name="description"
-                      placeholder="eg Fun for all the family!"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  {this.state.errors.description && <small className="help is-danger">{this.state.errors.description}</small>}
-                </div>
-                <div className="field">
-                  <label className="label">Photo</label>
-                  <div className="control">
-                    <input
-                      className="input"
-                      name="photo"
-                      placeholder="eg url"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  {this.state.errors.photo && <small className="help is-danger">{this.state.errors.photo}</small>}
-                </div>
-                <div className="field">
-                  <label className="label">Venue</label>
-                  <div className="control">
-                    <input
-                      className="input"
-                      name="venue"
-                      placeholder="eg Wembley"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  {this.state.errors.venue && <small className="help is-danger">{this.state.errors.venue}</small>}
+                  <label className="label">Cost</label>
+                  <Rating name='cost'
+                    initialRating={this.state.formData.cost}
+                    onChange={this.handleRatingChange}
+                  />
                 </div>
                 <div className="field">
                   <label className="label">Category</label>
@@ -160,7 +114,17 @@ class DestinationNew extends React.Component {
                     isMulti
                     onChange={this.handleCategoryChange}
                   />
-                  {this.state.errors.categories && <small className="help is-danger">{this.state.errors.categories}</small>}
+                </div>
+                <div className="field">
+                  <label className="label">Description</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      name="description"
+                      placeholder="eg A lovely walking holiday"
+                      onChange={this.handleChange}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

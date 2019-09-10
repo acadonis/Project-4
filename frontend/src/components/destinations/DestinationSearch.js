@@ -52,9 +52,9 @@ class DestinationSearch extends React.Component {
         <section className="section">
           <div className="container">
             <h1 className="title is-3">Please choose the following!</h1>
-            <div className="columns is-multiline">
-              <div className="column is-one-third-desktop is-one-third-tablet">
-                <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
+              <div className="columns is-multiline">
+                <div className="column is-one-third-desktop is-one-third-tablet">
                   <div className="field">
                     <label className="label">Category</label>
                     <Select
@@ -78,10 +78,10 @@ class DestinationSearch extends React.Component {
                       placeholder="Please use IATA code e.g. LHR for London Heathrow!" className="input"
                       onChange={this.handleChange}/>
                   </div>
-                  <button className="button" type="submit">Fly!</button>
-                </form>
+                  <button className="button" type="submit">Fly!s</button>
+                </div>
               </div>
-            </div>
+            </form>
 
           </div>
         </section>
