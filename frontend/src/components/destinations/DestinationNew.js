@@ -11,13 +11,16 @@ class DestinationNew extends React.Component {
     super()
     this.state = {
       formData: {
-        selectedCategory: null
+        cost: 1,
+        categories: null
       }
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleRatingChange = this.handleRatingChange.bind(this)
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
+
   }
 
   handleChange(e) {
@@ -36,8 +39,13 @@ class DestinationNew extends React.Component {
 
   }
 
+  handleRatingChange(rating) {
+    const formData = {...this.state.formData, cost: rating}
+
+    this.setState({ formData })
+  }
+
   handleCategoryChange(selectedCategory) {
-    console.log(selectedCategory)
 
     const formData = { ...this.state.formData, categories: selectedCategory || [] }
 
@@ -47,7 +55,7 @@ class DestinationNew extends React.Component {
   componentDidMount() {
     axios.get('/api/categories/')
       .then(res => this.setState({categoryChoices: res.data.map(option => {
-        return {label: option.name, value: option.id }
+        return {label: option.name, value: option }
       })}))
   }
 
@@ -116,7 +124,7 @@ class DestinationNew extends React.Component {
                 <div className="field">
                   <label className="label">Category</label>
                   <Select
-                    value= {selectedCategory}
+                    value={selectedCategory}
                     options={this.state.categoryChoices}
                     isMulti
                     onChange={this.handleCategoryChange}

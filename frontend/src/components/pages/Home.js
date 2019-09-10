@@ -23,7 +23,7 @@ function Home() {
             </Link>
           </div>
           <div className="column">
-            <Link to={'/destinations'}>
+            <Link to={'/destinations/new'}>
               <h1 className="title is-3">Add a low carbon destination!</h1>
             </Link>
           </div>
