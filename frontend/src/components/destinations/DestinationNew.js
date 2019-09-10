@@ -2,8 +2,6 @@ import React from 'react'
 import Select from 'react-select'
 import Rating from 'react-rating'
 import axios from 'axios'
-
-import { categories } from '../../lib/Categories'
 import Auth from '../../lib/Auth'
 
 
@@ -12,7 +10,9 @@ class DestinationNew extends React.Component {
   constructor() {
     super()
     this.state = {
-      formData: {}
+      formData: {
+        selectedCategory: null
+      }
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -36,17 +36,24 @@ class DestinationNew extends React.Component {
 
   }
 
-  handleCategoryChange(selectedCategories) {
-    const formData = { ...this.state.formData,
+  handleCategoryChange(selectedCategory) {
+    console.log(selectedCategory)
 
-      categories: selectedCategories ? selectedCategories.map(option => option.value) : [] }
-
+    const formData = { ...this.state.formData, categories: selectedCategory || [] }
 
     this.setState({ formData })
   }
 
+  componentDidMount() {
+    axios.get('/api/categories/')
+      .then(res => this.setState({categoryChoices: res.data.map(option => {
+        return {label: option.name, value: option.id }
+      })}))
+  }
+
   render() {
-    const selectedCategories = (this.state.formData.categories || [ ]).map(categories => ({ label: categories, value: categories }))
+    console.log(this.state)
+    const { selectedCategory } = this.state
 
     return (
       <section className="section">
@@ -109,8 +116,8 @@ class DestinationNew extends React.Component {
                 <div className="field">
                   <label className="label">Category</label>
                   <Select
-                    value= {selectedCategories}
-                    options={categories}
+                    value= {selectedCategory}
+                    options={this.state.categoryChoices}
                     isMulti
                     onChange={this.handleCategoryChange}
                   />
