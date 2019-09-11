@@ -15,27 +15,28 @@ class DestinationIndex extends React.Component {
     this.filterDestinations = this.filterDestinations.bind(this)
   }
 
-  componentDidMount() {
-    axios.all([
-      axios.get('/api/destinations'),
-      axios.get('/api/carbonkit', {
-        params: {
-          'values.IATAcode1': this.props.match.params.airport,
-          'values.IATAcode2': 'NQY'
-        }
-      })
-    ])
-      .then(axios.spread((destres, carbonres) => {
-        this.setState({
-          destinations: destres.data,
-          carbon: carbonres.data,
-          // can use either searchCategories or categoryArary for filter RegExp it seems
-          searchCategories: this.props.match.params.categories, searchCost: this.props.match.params.cost,
-          searchAirport: this.props.match.params.airport,
-          categoryArray: this.props.match.params.categories.split(',').map(Number)
+  componentDidMount(){
+    const destinationResponse = []
+    axios.get('/api/destinations')
+      .then(res => destinationResponse.data = res.data)
+    console.log(destinationResponse)
 
-        })
+    return axios.get('/api/carbonkit', {
+      params: {
+        'values.IATAcode1': this.props.match.params.airport,
+        'values.IATAcode2': 'LHR'
+      }
+    })
+      .then(res => this.setState({
+        destinations: destinationResponse.data,
+        carbon: res.data,
+        // can use either searchCategories or categoryArary for filter RegExp it seems
+        searchCategories: this.props.match.params.categories, searchCost: this.props.match.params.cost,
+        searchAirport: this.props.match.params.airport,
+        categoryArray: this.props.match.params.categories.split(',').map(Number)
+
       }))
+
   }
 
   filterDestinations(){
