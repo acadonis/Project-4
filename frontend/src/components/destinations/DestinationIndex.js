@@ -41,7 +41,7 @@ class DestinationIndex extends React.Component {
     const costRe = new RegExp(this.state.searchCost, 'i')
 
     const filterDestinationsCategory = _.filter(this.state.destinations, destination => {
-      return categoryRe.test(destination.categories[0].id)
+      return categoryRe.test(destination.categories.map(category => category.id))
     })
 
     const filterDestinationsCost = _.filter(filterDestinationsCategory, destination => {
