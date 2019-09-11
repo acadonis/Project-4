@@ -11,8 +11,7 @@ class DestinationNew extends React.Component {
     super()
     this.state = {
       formData: {
-        cost: 1,
-        categories: null
+        cost: 1
       }
     }
 
@@ -31,7 +30,11 @@ class DestinationNew extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    const formData = { ...this.state.formData}
+
+    const formData = {
+      ...this.state.formData
+    }
+
     axios.post('/api/destinations/', formData, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
@@ -47,16 +50,16 @@ class DestinationNew extends React.Component {
 
   handleCategoryChange(selectedCategory) {
 
-    const formData = { ...this.state.formData, categories: selectedCategory || [] }
+    const formData = { ...this.state.formData, categories: (selectedCategory || []).map(option => option.value) }
 
     this.setState({ formData })
   }
 
   componentDidMount() {
     axios.get('/api/categories/')
-      .then(res => this.setState({categoryChoices: res.data.map(option => {
-        return {label: option.name, value: option }
-      })}))
+      .then(res => this.setState({
+        categoryChoices: res.data.map(option => ({ label: option.name, value: option.id }))
+      }))
   }
 
   render() {
