@@ -11,7 +11,8 @@ class DestinationIndex extends React.Component {
     this.state = {
 
     }
-    this.filterDestinations = this.filterDestinations.bind(this)
+    this.filterDestinationsCost = this.filterDestinationsCost.bind(this)
+    this.filterDestinationsCategory = this.filterDestinationsCategory.bind(this)
   }
 
   componentDidMount() {
@@ -24,26 +25,43 @@ class DestinationIndex extends React.Component {
       })
   }
 
-  filterDestinations(){
+  filterDestinationsCost(){
 
     const costRe = new RegExp(this.state.searchCost, 'i')
 
-    const filterDestinations = _.filter(this.state.destinations, destination => {
+    const filterDestinationsCost = _.filter(this.state.destinations, destination => {
       return costRe.test(destination.cost)
+
+    })
+    return filterDestinationsCost
+  }
+
+  filterDestinationsCategory(){
+    const categoryRe = new RegExp(this.state.searchCategories, 'i')
+    const costRe = new RegExp(this.state.searchCost, 'i')
+
+    const filterDestinationsCategory = _.filter(this.state.destinations, destination => {
+      return categoryRe.test(destination.categories[0].id)
     })
 
-    return filterDestinations
+    const filterDestinationsCost = _.filter(filterDestinationsCategory, destination => {
+      return costRe.test(destination.cost)
+
+    })
+    return filterDestinationsCost
   }
 
 
+
   render() {
+
 
     if(!this.state.destinations) return <h2>Loading...</h2>
     console.log(this.state)
 
     return (
       <div className="container">
-        {this.state.destinations && this.filterDestinations().map((destination, i) =>
+        {this.state.destinations && this.filterDestinationsCategory().map((destination, i) =>
           <div key={i}>
             <Card
               {...destination}
