@@ -3,6 +3,7 @@ import Select from 'react-select'
 import Rating from 'react-rating'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
+import _ from 'lodash'
 
 
 class DestinationNew extends React.Component {
@@ -60,6 +61,18 @@ class DestinationNew extends React.Component {
       .then(res => this.setState({
         categoryChoices: res.data.map(option => ({ label: option.name, value: option.id }))
       }))
+  }
+
+  filterCocktails(){
+    const re = new RegExp(this.state.searchTerm, 'i')
+    const [field, order] = this.state.sortTerm.split('|')
+
+    const filterCocktails = _.filter(this.state.cocktails, cocktail => {
+      return re.test(cocktail.strDrink)
+    })
+    const sortedCocktails = _.orderBy(filterCocktails, [field], [order])
+
+    return sortedCocktails
   }
 
   render() {

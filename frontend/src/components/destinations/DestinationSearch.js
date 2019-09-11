@@ -2,9 +2,10 @@ import React from 'react'
 // import {Link } from 'react-router-dom'
 import Rating from 'react-rating'
 import Select from 'react-select'
+import axios from 'axios'
 // import Autosuggest from 'react-autosuggest'
 
-import { categories } from '../../lib/Categories'
+
 
 
 class DestinationSearch extends React.Component {
@@ -22,9 +23,10 @@ class DestinationSearch extends React.Component {
 
   }
 
+  handleCategoryChange(selectedCategory) {
 
-  handleCategoryChange(selectedCategories) {
-    const formData = { ...this.state.formData, categories: selectedCategories ? selectedCategories.map(option => option.value) : [] }
+    const formData = { ...this.state.formData, categories: (selectedCategory || []).map(option => option.value) }
+
     this.setState({ formData })
   }
 
@@ -44,9 +46,17 @@ class DestinationSearch extends React.Component {
 
   }
 
+  componentDidMount() {
+    axios.get('/api/categories/')
+      .then(res => this.setState({
+        categoryChoices: res.data.map(option => ({ label: option.name, value: option.id }))
+      }))
+  }
+
   render(){
-    const selectedCategories = (this.state.formData.categories || [ ]).map(category => ({ label: category, value: category }))
     console.log(this.state)
+    const { selectedCategory } = this.state
+
     return (
       <div>
         <section className="section">
@@ -58,8 +68,8 @@ class DestinationSearch extends React.Component {
                   <div className="field">
                     <label className="label">Category</label>
                     <Select
-                      value= {selectedCategories}
-                      options={categories}
+                      value= {selectedCategory}
+                      options={this.state.categoryChoices}
                       isMulti
                       onChange={this.handleCategoryChange}
                     />
@@ -78,7 +88,7 @@ class DestinationSearch extends React.Component {
                       placeholder="Please use IATA code e.g. LHR for London Heathrow!" className="input"
                       onChange={this.handleChange}/>
                   </div>
-                  <button className="button" type="submit">Fly!s</button>
+                  <button className="button" type="submit">Fly!</button>
                 </div>
               </div>
             </form>
