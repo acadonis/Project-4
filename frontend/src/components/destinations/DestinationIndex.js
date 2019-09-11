@@ -11,8 +11,8 @@ class DestinationIndex extends React.Component {
     this.state = {
 
     }
-    this.filterDestinationsCost = this.filterDestinationsCost.bind(this)
-    this.filterDestinationsCategory = this.filterDestinationsCategory.bind(this)
+
+    this.filterDestinations = this.filterDestinations.bind(this)
   }
 
   componentDidMount() {
@@ -21,22 +21,15 @@ class DestinationIndex extends React.Component {
         this.setState({
           destinations: res.data,
           searchCategories: this.props.match.params.categories, searchCost: this.props.match.params.cost,
-          searchAirport: this.props.match.params.airport })
+          searchAirport: this.props.match.params.airport,
+          categoryArray: this.props.match.params.categories.split(',').map(Number)
+
+        })
       })
   }
 
-  filterDestinationsCost(){
+  filterDestinations(){
 
-    const costRe = new RegExp(this.state.searchCost, 'i')
-
-    const filterDestinationsCost = _.filter(this.state.destinations, destination => {
-      return costRe.test(destination.cost)
-
-    })
-    return filterDestinationsCost
-  }
-
-  filterDestinationsCategory(){
     const categoryRe = new RegExp(this.state.searchCategories, 'i')
     const costRe = new RegExp(this.state.searchCost, 'i')
 
@@ -61,7 +54,7 @@ class DestinationIndex extends React.Component {
 
     return (
       <div className="container">
-        {this.state.destinations && this.filterDestinationsCategory().map((destination, i) =>
+        {this.state.destinations && this.filterDestinations().map((destination, i) =>
           <div key={i}>
             <Card
               {...destination}
