@@ -20,6 +20,7 @@ class DestinationIndex extends React.Component {
       .then(res => {
         this.setState({
           destinations: res.data,
+          // can use either searchCategories or categoryArary for filter RegExp it seems
           searchCategories: this.props.match.params.categories, searchCost: this.props.match.params.cost,
           searchAirport: this.props.match.params.airport,
           categoryArray: this.props.match.params.categories.split(',').map(Number)
@@ -30,7 +31,7 @@ class DestinationIndex extends React.Component {
 
   filterDestinations(){
 
-    const categoryRe = new RegExp(this.state.searchCategories, 'i')
+    const categoryRe = new RegExp(this.state.categoryArray, 'i')
     const costRe = new RegExp(this.state.searchCost, 'i')
 
     const filterDestinationsCategory = _.filter(this.state.destinations, destination => {
