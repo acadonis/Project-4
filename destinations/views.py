@@ -2,8 +2,21 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_204_NO_CONTENT
 
+import requests
+
 from .models import Category, Destination
 from .serializers import CategorySerializer, DestinationSerializer, PopulatedDestinationSerializer, PopulatedCategorySerializer
+
+
+class CarbonKitView(APIView):
+
+    def get(self, request):
+        headers = {
+            'Accept': 'application/json'
+        }
+
+        response = requests.get('https://api.carbonkit.net/3.6/categories/Great_Circle_flight_methodology/calculation', auth=('acadonis', 'pass'), headers=headers, params=request.query_params)
+        return Response(response.json())
 
 
 class DestinationList(APIView):

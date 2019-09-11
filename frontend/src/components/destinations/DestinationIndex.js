@@ -16,17 +16,26 @@ class DestinationIndex extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/destinations')
-      .then(res => {
+    axios.all([
+      axios.get('/api/destinations'),
+      axios.get('/api/carbonkit', {
+        params: {
+          'values.IATAcode1': this.props.match.params.airport,
+          'values.IATAcode2': 'NQY'
+        }
+      })
+    ])
+      .then(axios.spread((destres, carbonres) => {
         this.setState({
-          destinations: res.data,
+          destinations: destres.data,
+          carbon: carbonres.data,
           // can use either searchCategories or categoryArary for filter RegExp it seems
           searchCategories: this.props.match.params.categories, searchCost: this.props.match.params.cost,
           searchAirport: this.props.match.params.airport,
           categoryArray: this.props.match.params.categories.split(',').map(Number)
 
         })
-      })
+      }))
   }
 
   filterDestinations(){
