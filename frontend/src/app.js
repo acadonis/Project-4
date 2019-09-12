@@ -33,4 +33,3 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 )
-// const airports = res.data.map(response => response.airport)
