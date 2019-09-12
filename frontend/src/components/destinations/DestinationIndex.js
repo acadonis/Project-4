@@ -12,20 +12,16 @@ class DestinationIndex extends React.Component {
 
     }
 
+    // this.getDestinations = this.getDestinations.bind(this)
     this.filterDestinations = this.filterDestinations.bind(this)
   }
 
   componentDidMount(){
-    const destinationResponse = []
-
-    axios.get('/api/destinations')
-      .then(res => destinationResponse.data = res.data)
-    console.log(destinationResponse)
 
     return axios.get('/api/destinations')
       .then(res => {
+        console.log(res.data)
         const airports = res.data.map(response => response.airport)
-        console.log(airports)
 
         return axios.get('/api/carbonkit', {
           params: {
@@ -33,15 +29,18 @@ class DestinationIndex extends React.Component {
             'values.IATAcode2': airports[0]
           }
         })
-          .then(res => this.setState({
-            destinations: destinationResponse.data,
-            carbon: res.data,
-            // can use either searchCategories or categoryArary for filter RegExp it seems
-            searchCategories: this.props.match.params.categories, searchCost: this.props.match.params.cost,
-            searchAirport: this.props.match.params.airport,
-            categoryArray: this.props.match.params.categories.split(',').map(Number)
+          .then(carbonRes => {
+            res.data[0].carbon = carbonRes.data.output.amounts[0].value
+            this.setState({
+              destinations: res.data,
+              // can use either searchCategories or categoryArary for filter RegExp it seems
+              // searchCategories: this.props.match.params.categories,
+              searchCost: this.props.match.params.cost,
+              searchAirport: this.props.match.params.airport,
+              categoryArray: this.props.match.params.categories.split(',').map(Number)
 
-          }))
+            })
+          })
 
       })
   }
@@ -66,8 +65,7 @@ class DestinationIndex extends React.Component {
 
   render() {
 
-
-    if(!this.state.destinations) return <h2>Loading...</h2>
+    if(!this.state.destinations) return <h2>Loading</h2>
     console.log(this.state)
 
     return (
@@ -85,9 +83,7 @@ class DestinationIndex extends React.Component {
   }
 }
 
-// <section className="section">
-//   {this.state.result && <h1>{this.state.result.data[2].address}</h1>}
-// </section>
+
 
 
 export default DestinationIndex
