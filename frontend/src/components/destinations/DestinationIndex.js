@@ -20,7 +20,6 @@ class DestinationIndex extends React.Component {
 
     return axios.get('/api/destinations')
       .then(res => {
-        console.log(res.data)
         const airports = res.data.map(response => response.airport)
 
         return axios.get('/api/carbonkit', {
@@ -30,7 +29,8 @@ class DestinationIndex extends React.Component {
           }
         })
           .then(carbonRes => {
-            res.data[0].carbon = carbonRes.data.output.amounts[0].value
+            console.log(carbonRes.data)
+            res.data[0].carbon = carbonRes.data.output.amounts[1].value
             this.setState({
               destinations: res.data,
               // can use either searchCategories or categoryArary for filter RegExp
