@@ -33,7 +33,7 @@ class DestinationIndex extends React.Component {
             res.data[0].carbon = carbonRes.data.output.amounts[0].value
             this.setState({
               destinations: res.data,
-              // can use either searchCategories or categoryArary for filter RegExp it seems
+              // can use either searchCategories or categoryArary for filter RegExp
               // searchCategories: this.props.match.params.categories,
               searchCost: this.props.match.params.cost,
               searchAirport: this.props.match.params.airport,

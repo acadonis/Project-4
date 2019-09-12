@@ -39,7 +39,7 @@ class DestinationNew extends React.Component {
     axios.post('/api/destinations/', formData, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
-      .then(this.props.history.push('/destinations/'))
+      .then(this.props.history.push('/'))
 
   }
 
