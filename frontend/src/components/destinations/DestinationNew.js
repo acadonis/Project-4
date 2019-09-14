@@ -85,7 +85,7 @@ class DestinationNew extends React.Component {
           <h2 className="title is-3">Make a Destination!</h2>
           <form onSubmit={this.handleSubmit}>
             <div className="columns is-multiline">
-              <div className="column is-one-third-desktop is-one-third-tablet">
+              <div className="column is-half-desktop is-half-tablet">
                 <div className="field">
                   <label className="label">Name</label>
                   <div className="control">

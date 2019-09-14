@@ -64,7 +64,7 @@ class DestinationSearch extends React.Component {
             <h1 className="title is-3">Please choose the following!</h1>
             <form onSubmit={this.handleSubmit}>
               <div className="columns is-multiline">
-                <div className="column is-one-third-desktop is-one-third-tablet">
+                <div className="column is-half-desktop is-half-tablet">
                   <div className="field">
                     <label className="label">Category</label>
                     <Select
@@ -88,7 +88,7 @@ class DestinationSearch extends React.Component {
                       placeholder="Please use IATA code e.g. LHR for London Heathrow!" className="input"
                       onChange={this.handleChange}/>
                   </div>
-                  <button className="button" type="submit">Fly!</button>
+                  <button className="button" type="submit">Go!</button>
                 </div>
               </div>
             </form>
