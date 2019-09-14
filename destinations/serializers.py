@@ -14,7 +14,7 @@ class DestinationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Destination
-        fields = ('id', 'name', 'airport', 'address', 'longitude', 'latitude', 'cost', 'image', 'description', 'user', 'categories',)
+        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'user', 'categories',)
 
 class PopulatedCategorySerializer(CategorySerializer):
 
@@ -30,7 +30,7 @@ class PopulatedDestinationSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta(DestinationSerializer.Meta):
-        fields = ('id', 'name', 'airport', 'address', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
+        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
 
 #
 #

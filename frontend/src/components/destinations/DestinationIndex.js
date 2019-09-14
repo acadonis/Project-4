@@ -65,21 +65,40 @@ class DestinationIndex extends React.Component {
 
   render() {
 
-    if(!this.state.destinations) return <h2>Loading</h2>
-    console.log(this.state)
+    if(!this.state.destinations) {
+      return <h2>Loading</h2>
+    }
 
-    return (
-      <div className="container">
-        {this.state.destinations && this.filterDestinations().map((destination, i) =>
-          <div key={i}>
-            <Card
-              {...destination}
-            />
+    if (this.state.destinations && this.filterDestinations().length === 0) {
+      return <h2>No data</h2>
+
+    } else {
+
+      return (
+        <section className="section">
+          <div className="container">
+            <div className="columns is-multiline">
+              <div className="column is-half-tablet is-half-desktop">
+                {this.state.destinations && this.filterDestinations().map((destination, i) =>
+                  <div key={i}>
+                    <Card
+                      {...destination}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="column is-half-tablet is-half-desktop is-hidden-mobile">
+                <figure className="image">
+                  <img src='https://i.pinimg.com/originals/cc/44/7e/cc447e450b7ca52d4a5576aeb1332197.jpg' alt={name} />
+                </figure>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+        </section>
 
-    )
+      )
+
+    }
   }
 }
 
