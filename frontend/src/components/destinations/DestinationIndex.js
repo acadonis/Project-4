@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Card from '../common/Card'
 import _ from 'lodash'
+import { Link } from 'react-router-dom'
 
 
 class DestinationIndex extends React.Component {
@@ -79,11 +80,13 @@ class DestinationIndex extends React.Component {
           <div className="container">
             <div className="columns is-multiline">
               <div className="column is-half-tablet is-half-desktop">
-                {this.state.destinations && this.filterDestinations().map((destination, i) =>
-                  <div key={i}>
-                    <Card
-                      {...destination}
-                    />
+                {this.state.destinations && this.filterDestinations().map((destination) =>
+                  <div key={destination.id}>
+                    <Link to={`destinations/${destination.id}/`}>
+                      <Card
+                        {...destination}
+                      />
+                    </Link>
                   </div>
                 )}
               </div>

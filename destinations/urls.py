@@ -3,8 +3,8 @@ from .views import CategoryList, CategoryDetail, DestinationList, DestinationDet
 
 
 urlpatterns = [
-    path('destinations/', DestinationList.as_view(), name='destinations-list'),
     path('destinations/<int:pk>/', DestinationDetail.as_view(), name='destinations-detail'),
+    path('destinations/', DestinationList.as_view(), name='destinations-list'),
     path('categories/', CategoryList.as_view(), name='categories-list'),
     path('categories/<int:pk>/', CategoryDetail.as_view(), name='categories-detail'),
     path('carbonkit/', CarbonKitView.as_view(), name='carbonkit')
