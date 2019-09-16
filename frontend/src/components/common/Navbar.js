@@ -1,14 +1,10 @@
 import React from 'react'
-import ReasctDOM from 'react-dom'
 import {Link, withRouter } from 'react-router-dom'
-
-
 
 class Navbar extends React.Component {
   constructor(){
     super()
     this.state = {
-      cocktails: {},
       navbarOpen: false
 
     }
@@ -32,11 +28,6 @@ class Navbar extends React.Component {
             </a>
           </div>
           <div className={`navbar-menu ${this.state.navbarOpen ? 'is-active' : ''} ` }>
-            <div className="navbar-end">
-              <Link to= "/rum" className="navbar-item"> Rum</Link>
-              <Link to= "/vodka" className="navbar-item"> Vodka</Link>
-              <Link to= "/gin" className="navbar-item" > Gin</Link>
-            </div>
           </div>
         </div>
       </nav>

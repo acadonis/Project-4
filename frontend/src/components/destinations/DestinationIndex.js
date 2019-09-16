@@ -82,7 +82,7 @@ class DestinationIndex extends React.Component {
               <div className="column is-half-tablet is-half-desktop">
                 {this.state.destinations && this.filterDestinations().map((destination) =>
                   <div key={destination.id}>
-                    <Link to={`destinations/${destination.id}/`}>
+                    <Link to={`/destinations/${destination.id}/`}>
                       <Card
                         {...destination}
                       />

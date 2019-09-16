@@ -40,7 +40,7 @@ class DestinationDetail(APIView):
 
     def get(self, _request, pk):
         destination = Destination.objects.get(pk=pk)
-        serializer = DestinationSerializer(destination)
+        serializer = PopulatedDestinationSerializer(destination)
         return Response(serializer.data)
 
     def put(self, request, pk):
