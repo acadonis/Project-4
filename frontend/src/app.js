@@ -21,10 +21,10 @@ class App extends React.Component {
     return (
       <HashRouter>
         <Navbar />
-        <ToastContainer   position="bottom-right" hideProgressBar={true} />
+        <ToastContainer position="bottom-right" hideProgressBar={true} />
         <Switch>
-          <Route exact path="/destinations/:id" component={DestinationShow} />
           <Route path="/destinations/new" component={DestinationNew} />
+          <Route exact path="/destinations/:id" component={DestinationShow} />
           <Route path="/destinations/:categories/:cost/:airport" component={DestinationIndex} />
           <Route path="/search" component={DestinationSearch} />
           <Route path="/register" component={Register} />

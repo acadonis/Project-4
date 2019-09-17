@@ -12,13 +12,9 @@ function Home() {
           <h2 className="subtitle is-spaced">
           Europe contains a wonderful array of desitinations just waiting to be explored, and you can even add your own below! </h2>
         </div>
-        <br>
-        </br>
         <div className="container">
           <h2 className="title is-3">What would you like to do today?</h2>
         </div>
-        <br>
-        </br>
         <div className="container">
           <div className="columns is-multiline">
             <div className="column">
