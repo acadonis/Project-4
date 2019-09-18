@@ -8,26 +8,22 @@ function Home() {
       <section className="section">
         <div className="container">
           <h1 className="title is-2 is-spaced">Welcome to Low Carbon Europe</h1>
-          <h2 className="subtitle">Find your ideal holiday in Europe and save carbon compared to a holiday further afield! </h2>
-          <h2 className="subtitle is-spaced">
-          Europe contains a wonderful array of desitinations just waiting to be explored, and you can even add your own below! </h2>
-        </div>
-        <div className="container">
-          <h2 className="title is-3">What would you like to do today?</h2>
-        </div>
-        <div className="container">
+          <h3 className="subtitle is-4 is-spaced">Find your ideal holiday in Europe and save carbon compared to a holiday further afield! </h3>
+          <h3 className="subtitle is-4 is-spaced">
+          Europe contains a wonderful array of desitinations just waiting to be explored, and you can even add your own below! </h3>
+          <h2 className="title is-2 is-spaced">What would you like to do today?</h2>
           <div className="columns is-multiline">
             <div className="column">
               <div className="box">
                 <Link to={'/search'}>
-                  <h2 className="title is-3">Search for a holiday!</h2>
+                  <h3 className="title is-3">Search for a holiday!</h3>
                 </Link>
               </div>
             </div>
             <div className="column">
               <div className="box">
                 <Link to={'/destinations/new'}>
-                  <h2 className="title is-3">Add a destination!</h2>
+                  <h3 className="title is-3">Add a destination!</h3>
                 </Link>
               </div>
             </div>

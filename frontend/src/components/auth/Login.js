@@ -30,7 +30,7 @@ class Login extends React.Component {
       .then(res => {
         Auth.setToken(res.data.token)
         toast.success(res.data.message)
-        this.props.history.push('/') 
+        this.props.history.push('/')
       })
       .catch(() => {
         Auth.removeToken() // remove the token from localStorage
@@ -75,18 +75,15 @@ class Login extends React.Component {
                   </div>
                   {this.state.error && <small className="help is-danger">{this.state.error}</small>}
                 </div>
-
-                <button className="button is-info">Submit</button>
+                <button className="button is-active">Submit</button>
               </form>
             </div>
-            <br />
-            <br />
-            <h3 className="title is-3 has-text-weight-medium">OR</h3>
-            <br />
+          </div>
+          <div className="column">
             <h2 className="title is-2">Register</h2>
             <div className="container">
               <button
-                className="button is-info"
+                className="button is-active"
                 onClick={this.redirectToSignUp}
               >Sign Up</button>
             </div>
