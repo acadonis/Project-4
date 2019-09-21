@@ -13,7 +13,9 @@ class DestinationSearch extends React.Component {
     super()
     this.state = {
       formData: {
-        cost: ''
+        cost: '',
+        airport: '',
+        categories: []
       }
     }
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
@@ -54,9 +56,9 @@ class DestinationSearch extends React.Component {
   }
 
   render(){
-    console.log(this.state)
+    const {categories, cost, airport} = this.state.formData
+    const isEnabled = categories.length > 0 && cost !== '' && airport !== ''
     const { selectedCategory } = this.state
-
     return (
       <div>
         <section className="section">
@@ -86,9 +88,10 @@ class DestinationSearch extends React.Component {
                     <input
                       type="text"
                       placeholder="Please use IATA code e.g. LHR for London Heathrow!" className="input"
-                      onChange={this.handleChange}/>
+                      onChange={this.handleChange}
+                    />
                   </div>
-                  <button className="button" type="submit">Go!</button>
+                  <button className="button" type="submit" disabled={!isEnabled}>Go!</button>
                 </div>
               </div>
             </form>

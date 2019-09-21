@@ -21,29 +21,29 @@ class DestinationIndex extends React.Component {
 
     return axios.get('/api/destinations')
       .then(res => {
-        const airports = res.data.map(response => response.airport)
+        // const airports = res.data.map(response => response.airport)
+        //
+        // return axios.get('/api/carbonkit', {
+        //   params: {
+        //     'values.IATAcode1': this.props.match.params.airport,
+        //     'values.IATAcode2': airports[0]
+        //   }
+        // })
+        //   .then(carbonRes => {
+        //     console.log(carbonRes.data)
+        //     res.data[0].carbon = carbonRes.data.output.amounts[1].value
+        this.setState({
+          destinations: res.data,
+          // can use either searchCategories or categoryArary for filter RegExp
+          // searchCategories: this.props.match.params.categories,
+          searchCost: this.props.match.params.cost,
+          searchAirport: this.props.match.params.airport,
+          categoryArray: this.props.match.params.categories.split(',').map(Number)
 
-        return axios.get('/api/carbonkit', {
-          params: {
-            'values.IATAcode1': this.props.match.params.airport,
-            'values.IATAcode2': airports[0]
-          }
         })
-          .then(carbonRes => {
-            console.log(carbonRes.data)
-            res.data[0].carbon = carbonRes.data.output.amounts[1].value
-            this.setState({
-              destinations: res.data,
-              // can use either searchCategories or categoryArary for filter RegExp
-              // searchCategories: this.props.match.params.categories,
-              searchCost: this.props.match.params.cost,
-              searchAirport: this.props.match.params.airport,
-              categoryArray: this.props.match.params.categories.split(',').map(Number)
-
-            })
-          })
-
       })
+
+    // })
   }
 
   filterDestinations(){
@@ -71,7 +71,7 @@ class DestinationIndex extends React.Component {
     }
 
     if (this.state.destinations && this.filterDestinations().length === 0) {
-      return <h2>No data</h2>
+      return <h2>No results match this search. <Link to="/search/"> Please try again! </Link></h2>
 
     } else {
 

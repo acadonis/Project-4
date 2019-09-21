@@ -9,7 +9,10 @@ class Login extends React.Component {
   constructor() {
     super()
     this.state = {
-      formData: {},
+      formData: {
+        email: '',
+        password: ''
+      },
       error: ''
     }
 
@@ -33,8 +36,8 @@ class Login extends React.Component {
         this.props.history.push('/')
       })
       .catch(() => {
-        Auth.removeToken() // remove the token from localStorage
-        this.setState({ error: 'Invalid credentials' }) // display an error
+        Auth.removeToken()
+        this.setState({ error: 'Invalid credentials' })
       })
   }
 
@@ -43,6 +46,8 @@ class Login extends React.Component {
   }
 
   render() {
+    const {email, password} = this.state.formData
+    const isEnabled = email !== '' && password !== ''
     return (
       <section className="section">
         <div className="columns">
@@ -75,7 +80,7 @@ class Login extends React.Component {
                   </div>
                   {this.state.error && <small className="help is-danger">{this.state.error}</small>}
                 </div>
-                <button className="button is-active">Submit</button>
+                <button className="button is-active" disabled={!isEnabled}>Submit</button>
               </form>
             </div>
           </div>
@@ -84,6 +89,7 @@ class Login extends React.Component {
             <div className="container">
               <button
                 className="button is-active"
+
                 onClick={this.redirectToSignUp}
               >Sign Up</button>
             </div>

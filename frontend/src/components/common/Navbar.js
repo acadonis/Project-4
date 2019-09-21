@@ -8,17 +8,21 @@ class Navbar extends React.Component {
   constructor(){
     super()
     this.state = {
-      cocktails: {},
       navbarOpen: false
-
     }
+    this.logout = this.logout.bind(this)
     this.toggleNavbar = this.toggleNavbar.bind(this)
   }
 
   toggleNavbar(){
     this.setState({navbarOpen: !this.state.navbarOpen})
-
   }
+
+  logout() {
+    Auth.removeToken()
+    this.props.history.push('/')
+  }
+
   componentDidUpdate(prevProps) {
     if(prevProps.location.pathname !== this.props.location.pathname) {
       this.setState({ navbarOpen: false})
@@ -41,13 +45,11 @@ class Navbar extends React.Component {
             </Link>
 
             <a role="button"
-              className="navbar-burger burger"
+              className={`navbar-burger ${this.state.navbarOpen ? 'is-active' : ''} ` }
               onClick={this.toggleNavbar}>
-
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
-
             </a>
           </div>
           <div className={`navbar-menu ${this.state.navbarOpen ? 'is-active' : ''} ` }>
@@ -65,35 +67,31 @@ class Navbar extends React.Component {
                   </Link>
                 </div>
               </div>
-              <Link to="/about" className="navbar-item">
-              About
-              </Link>
             </div>
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
                   {!Auth.isAuthenticated() &&
-                <Link to="/register" className="button is-active">
-                  Sign up
-                </Link>
+                    <Link to="/register" className="button is-active">
+                      Sign up
+                    </Link>
                   }
                   {!Auth.isAuthenticated() &&
-                <Link  to="/login" className="button is-active">
-                  Log in
-                </Link>
+                    <Link  to="/login" className="button is-active">
+                      Log in
+                    </Link>
                   }
                   {Auth.isAuthenticated() &&
-                <Link
-                  to="/"
-                  className="button is-dark"
-                  onClick={this.logout}
-                >
-                  Logout
-                </Link>
+                    <Link
+                      to="/"
+                      className="button is-dark"
+                      onClick={this.logout}
+                    >
+                      Logout
+                    </Link>
                   }
                 </div>
               </div>
-
             </div>
           </div>
         </div>

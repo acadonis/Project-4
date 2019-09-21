@@ -7,7 +7,13 @@ class Register extends React.Component {
   constructor() {
     super()
     this.state = {
-      formData: {}
+      formData: {
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      },
+      errors: {}
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -16,7 +22,7 @@ class Register extends React.Component {
 
   handleChange(e) {
     const formData = { ...this.state.formData, [e.target.name]: e.target.value }
-    this.setState({ formData })
+    this.setState({ formData} )
   }
 
   handleSubmit(e) {
@@ -27,10 +33,14 @@ class Register extends React.Component {
         toast.success(res.data.message)
         this.props.history.push('/login/')
       })
+
   }
 
   render() {
-    console.log(this.state.formData)
+    console.log(this.state)
+    const {username, email, password, password_confirmation} = this.state.formData
+    const isEnabled = username !== '' & email !== '' && password !== '' && password_confirmation !== ''
+
     return (
       <section className="section">
         <div className="container">
@@ -84,8 +94,7 @@ class Register extends React.Component {
                     />
                   </div>
                 </div>
-
-                <button className="button">Submit</button>
+                <button className="button is-active" disabled={!isEnabled}>Submit</button>
               </form>
             </div>
           </div>

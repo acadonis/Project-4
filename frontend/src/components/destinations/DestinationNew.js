@@ -12,7 +12,13 @@ class DestinationNew extends React.Component {
     super()
     this.state = {
       formData: {
-        cost: 1
+        name: '',
+        airport: '',
+        address: '',
+        image: '',
+        cost: null,
+        categories: [],
+        description: ''
       }
     }
 
@@ -77,6 +83,9 @@ class DestinationNew extends React.Component {
 
   render() {
     console.log(this.state)
+    const { name, airport, address, image, cost, categories, description} = this.state.formData
+    const isEnabled = name !== '' & airport !== '' && address !== '' && image !== '' && cost !== null && categories !== [] && description !== ''
+
     const { selectedCategory } = this.state
 
     return (
@@ -159,7 +168,7 @@ class DestinationNew extends React.Component {
                 </div>
               </div>
             </div>
-            <button className="button">Submit</button>
+            <button className="button is-active" disabled={!isEnabled}>Submit</button>
           </form>
         </div>
       </section>
