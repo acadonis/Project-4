@@ -29,8 +29,8 @@ class Navbar extends React.Component {
     }
   }
 
-
   render(){
+    
     return(
       <nav className="navbar is-fixed-top is-success">
         <div className="container">

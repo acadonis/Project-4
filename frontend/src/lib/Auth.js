@@ -19,8 +19,7 @@ class Auth {
 
   static isAuthenticated() {
     const payload = this.getPayload()
-    const now = Math.round(Date.now() / 1000)
-    return payload && now < payload.exp
+    return payload
   }
 
   static getCurrentUserId() {
