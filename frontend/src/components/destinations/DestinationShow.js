@@ -26,7 +26,7 @@ class DestinationShow extends React.Component {
 
   render(){
     if(!this.state.destination) return <h2>Loading...</h2>
-    const user = this.state.destination.user.email
+    const user = this.state.destination.user
     console.log(user)
     console.log(Auth.getCurrentUserId())
     return(
@@ -49,7 +49,7 @@ class DestinationShow extends React.Component {
           <div className="level-item">
             {Auth.isCurrentUser(user) && <button
               className="button has-text-weight-semibold is-danger"
-              onClick= {this.deleteDestination()}
+              onClick= {this.deleteDestination}
             >Delete</button>}
           </div>
         </div>

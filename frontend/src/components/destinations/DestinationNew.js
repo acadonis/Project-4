@@ -3,7 +3,6 @@ import Select from 'react-select'
 import Rating from 'react-rating'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
-import _ from 'lodash'
 
 
 class DestinationNew extends React.Component {
@@ -14,7 +13,7 @@ class DestinationNew extends React.Component {
       formData: {
         name: '',
         airport: '',
-        address: '',
+        country: '',
         image: '',
         cost: null,
         categories: [],
@@ -69,22 +68,12 @@ class DestinationNew extends React.Component {
       }))
   }
 
-  filterCocktails(){
-    const re = new RegExp(this.state.searchTerm, 'i')
-    const [field, order] = this.state.sortTerm.split('|')
 
-    const filterCocktails = _.filter(this.state.cocktails, cocktail => {
-      return re.test(cocktail.strDrink)
-    })
-    const sortedCocktails = _.orderBy(filterCocktails, [field], [order])
-
-    return sortedCocktails
-  }
 
   render() {
     console.log(this.state)
-    const { name, airport, address, image, cost, categories, description} = this.state.formData
-    const isEnabled = name !== '' & airport !== '' && address !== '' && image !== '' && cost !== null && categories !== [] && description !== ''
+    const { name, airport, country, image, cost, categories, description} = this.state.formData
+    const isEnabled = name !== '' & airport !== '' && country !== '' && image !== '' && cost !== null && categories !== [] && description !== ''
 
     const { selectedCategory } = this.state
 
@@ -118,11 +107,11 @@ class DestinationNew extends React.Component {
                   </div>
                 </div>
                 <div className="field">
-                  <label className="label">Address</label>
+                  <label className="label">Country</label>
                   <div className="control">
                     <input
                       className="input"
-                      name="address"
+                      name="country"
                       placeholder="eg Cumbria"
                       onChange={this.handleChange}
                     />
