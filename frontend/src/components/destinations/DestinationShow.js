@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Auth from '../../lib/Auth'
 
 
 class DestinationShow extends React.Component {
@@ -8,6 +9,14 @@ class DestinationShow extends React.Component {
     this.state = {
 
     }
+    this.deleteDestination = this.deleteDestination.bind(this)
+  }
+
+  deleteDestination() {
+    axios.delete(`/api/destinations/${this.props.match.params.id}`, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}`}
+    })
+      .then(() => this.props.history.push('/'))
   }
 
   componentDidMount(){
@@ -16,8 +25,10 @@ class DestinationShow extends React.Component {
   }
 
   render(){
-    console.log(this.state)
     if(!this.state.destination) return <h2>Loading...</h2>
+    const user = this.state.destination.user.email
+    console.log(user)
+    console.log(Auth.getCurrentUserId())
     return(
       <section className="section">
         <div className="container">
@@ -34,6 +45,12 @@ class DestinationShow extends React.Component {
                 {this.state.destination.categories.map(category => <li key={category.id}>{category.name}</li>)}
               </ul>
             </div>
+          </div>
+          <div className="level-item">
+            {Auth.isCurrentUser(user) && <button
+              className="button has-text-weight-semibold is-danger"
+              onClick= {this.deleteDestination()}
+            >Delete</button>}
           </div>
         </div>
       </section>

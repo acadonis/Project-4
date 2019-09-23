@@ -28,7 +28,7 @@ class Auth {
   }
 
   static isCurrentUser(user) {
-    return this.getCurrentUserId() === user._id
+    return this.getCurrentUserId() === user
   }
 
 

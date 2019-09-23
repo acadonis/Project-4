@@ -27,7 +27,6 @@ class PopulatedCategorySerializer(CategorySerializer):
 class PopulatedDestinationSerializer(serializers.ModelSerializer):
 
     categories = CategorySerializer(many=True, read_only=True)
-    user = UserSerializer(read_only=True)
 
     class Meta(DestinationSerializer.Meta):
         fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
