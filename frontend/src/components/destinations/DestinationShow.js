@@ -44,6 +44,7 @@ class DestinationShow extends React.Component {
               <ul>
                 {this.state.destination.categories.map(category => <li key={category.id}>{category.name}</li>)}
               </ul>
+              <h1>{this.state.destination.description}</h1>
             </div>
           </div>
           <div className="level-item">

@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
+
+alphanumeric = RegexValidator(r'^[A-Z]*$', 'Only capital letters are allowed.')
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -9,8 +12,9 @@ class Category(models.Model):
         return self.name
 
 class Destination(models.Model):
+
     name = models.CharField(max_length=50, unique=True)
-    airport = models.CharField(max_length=3, null=True,)
+    airport = models.CharField(max_length=3, null=True, validators=[alphanumeric])
     country = models.CharField(max_length=50)
     longitude = models.IntegerField(blank=True, null=True)
     latitude = models.IntegerField(blank=True, null=True)

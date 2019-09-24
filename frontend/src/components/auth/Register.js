@@ -22,7 +22,8 @@ class Register extends React.Component {
 
   handleChange(e) {
     const formData = { ...this.state.formData, [e.target.name]: e.target.value }
-    this.setState({ formData} )
+    const errors = { ...this.state.errors, [e.target.name]: '' }
+    this.setState({ formData, errors })
   }
 
   handleSubmit(e) {
@@ -33,11 +34,13 @@ class Register extends React.Component {
         toast.success(res.data.message)
         this.props.history.push('/login/')
       })
-
+      .catch(err => this.setState({ errors: err.response.data }))
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state.formData)
+    console.log(this.state.errors)
+
     const {username, email, password, password_confirmation} = this.state.formData
     const isEnabled = username !== '' & email !== '' && password !== '' && password_confirmation !== ''
 
@@ -57,6 +60,7 @@ class Register extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.name && <small className="help is-danger">{this.state.errors.name}</small>}
                 </div>
                 <div className="field">
                   <label className="label">Email</label>
@@ -69,6 +73,7 @@ class Register extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.email && <small className="help is-danger">{this.state.errors.email}</small>}
                 </div>
                 <div className="field">
                   <label className="label">Password</label>
@@ -81,6 +86,7 @@ class Register extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.password && <small className="help is-danger">{this.state.errors.password}</small>}
                 </div>
                 <div className="field">
                   <label className="label">Password Confirmation</label>
@@ -93,6 +99,7 @@ class Register extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.password_confirmation && <small className="help is-danger">{this.state.errors.password_confirmation}</small>}
                 </div>
                 <button className="button is-active" disabled={!isEnabled}>Submit</button>
               </form>

@@ -18,6 +18,15 @@ class DestinationNew extends React.Component {
         cost: null,
         categories: [],
         description: ''
+      },
+      errors: {
+        name: '',
+        airport: '',
+        country: '',
+        image: '',
+        cost: '',
+        categories: '',
+        description: ''
       }
     }
 
@@ -30,8 +39,8 @@ class DestinationNew extends React.Component {
 
   handleChange(e) {
     const formData = { ...this.state.formData, [e.target.name]: e.target.value }
-
-    this.setState({ formData })
+    const errors = { ...this.state.errors, [e.target.name]: '' }
+    this.setState({ formData, errors })
   }
 
   handleSubmit(e) {
@@ -44,8 +53,8 @@ class DestinationNew extends React.Component {
     axios.post('/api/destinations/', formData, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
-      .then(this.props.history.push('/'))
-
+      .then(res => this.props.history.push(`destination/${res.data._id}`))
+      .catch(err => this.setState({ errors: err.response.data }))
   }
 
   handleRatingChange(rating) {
@@ -71,7 +80,8 @@ class DestinationNew extends React.Component {
 
 
   render() {
-    console.log(this.state)
+    console.log(this.state.formData)
+    console.log(this.state.errors)
     const { name, airport, country, image, cost, categories, description} = this.state.formData
     const isEnabled = name !== '' & airport !== '' && country !== '' && image !== '' && cost !== null && categories !== [] && description !== ''
 
@@ -94,6 +104,7 @@ class DestinationNew extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.name && <small className="help is-danger">{this.state.errors.name}</small>}
                 </div>
                 <div className="field">
                   <label className="label">Airport</label>
@@ -105,6 +116,7 @@ class DestinationNew extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.airport && <small className="help is-danger">{this.state.errors.airport}</small>}
                 </div>
                 <div className="field">
                   <label className="label">Country</label>
@@ -112,9 +124,10 @@ class DestinationNew extends React.Component {
                     <input
                       className="input"
                       name="country"
-                      placeholder="eg Cumbria"
+                      placeholder="eg Germany"
                       onChange={this.handleChange}
                     />
+                    {this.state.errors.country && <small className="help is-danger">{this.state.errors.country}</small>}
                   </div>
                 </div>
                 <div className="field">
@@ -127,6 +140,7 @@ class DestinationNew extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.image && <small className="help is-danger">{this.state.errors.image}</small>}
                 </div>
                 <div className="field">
                   <label className="label">Cost</label>
@@ -154,6 +168,7 @@ class DestinationNew extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
+                  {this.state.errors.description && <small className="help is-danger">{this.state.errors.description}</small>}
                 </div>
               </div>
             </div>
