@@ -18,7 +18,7 @@ class Destination(models.Model):
     country = models.CharField(max_length=50)
     longitude = models.IntegerField(blank=True, null=True)
     latitude = models.IntegerField(blank=True, null=True)
-    cost = models.IntegerField(null=True)
+    cost = models.IntegerField()
     image = models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=5000)
 

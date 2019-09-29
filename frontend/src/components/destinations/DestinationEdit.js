@@ -70,8 +70,7 @@ class DestinationNew extends React.Component {
   }
 
   render() {
-    console.log(this.state.formData)
-    console.log(this.state.errors)
+    console.log(this.state)
     const { name, airport, country, image, cost, categories, description} = this.state.formData
     const isEnabled = name !== '' && airport !== '' && country !== '' && image !== '' && cost !== null && categories !== [] && description !== ''
 

@@ -56,25 +56,31 @@ class Login extends React.Component {
             <div className="container">
               <form onSubmit={this.handleSubmit}>
                 <div className="field">
-                  <label className="label">Email</label>
+                  <label className="label" htmlFor="user-email">Email</label>
+                  <p className="help" id="user-email-hint"> Enter your email address
+                  </p>
                   <div className="control">
                     <input
+                      id = "user-email"
+                      aria-describedby="user-email-hint"
                       className="input"
                       type="email"
                       name="email"
-                      placeholder="eg"
                       onChange={this.handleChange}
                     />
                   </div>
                 </div>
                 <div className="field">
-                  <label className="label">Password</label>
+                  <label className="label" htmlFor="user-password">Password</label>
+                  <p className="help" id="user-password-hint"> Enter your password
+                  </p>
                   <div className="control">
                     <input
+                      id = "user-password"
+                      aria-describedby="user-password-hint"
                       className="input"
                       type="password"
                       name="password"
-                      placeholder="eg: ••••••••"
                       onChange={this.handleChange}
                     />
                   </div>
@@ -89,7 +95,6 @@ class Login extends React.Component {
             <div className="container">
               <button
                 className="button is-active"
-
                 onClick={this.redirectToSignUp}
               >Sign Up</button>
             </div>

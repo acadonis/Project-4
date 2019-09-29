@@ -42,7 +42,7 @@ class Register extends React.Component {
     console.log(this.state.errors)
 
     const {username, email, password, password_confirmation} = this.state.formData
-    const isEnabled = username !== '' & email !== '' && password !== '' && password_confirmation !== ''
+    const isEnabled = username !== '' && email !== '' && password !== '' && password_confirmation !== ''
 
     return (
       <section className="section">
@@ -51,51 +51,63 @@ class Register extends React.Component {
             <div className="column is-half-desktop">
               <form onSubmit={this.handleSubmit}>
                 <div className="field">
-                  <label className="label">Username</label>
+                  <label className="label" htmlFor="username">Username</label>
+                  <p className="help" id="username-hint"> Enter a username with no spaces
+                  </p>
                   <div className="control">
                     <input
+                      id = "username"
+                      aria-describedby="username-hint"
                       className="input"
                       name="username"
-                      placeholder="eg"
                       onChange={this.handleChange}
                     />
                   </div>
-                  {this.state.errors.name && <small className="help is-danger">{this.state.errors.name}</small>}
+                  {this.state.errors.username && <small className="help is-danger">{this.state.errors.username}</small>}
                 </div>
                 <div className="field">
-                  <label className="label">Email</label>
+                  <label className="label" htmlFor="email">Email</label>
+                  <p className="help" id="email-hint"> Enter a valid email address
+                  </p>
                   <div className="control">
                     <input
+                      id="email"
+                      aria-describedby="email-hint"
                       className="input"
                       type="email"
                       name="email"
-                      placeholder="eg"
                       onChange={this.handleChange}
                     />
                   </div>
                   {this.state.errors.email && <small className="help is-danger">{this.state.errors.email}</small>}
                 </div>
                 <div className="field">
-                  <label className="label">Password</label>
+                  <label className="label" htmlFor="password">Password</label>
+                  <p className="help" id="password-hint"> Enter a password at least 8 characters long
+                  </p>
                   <div className="control">
                     <input
+                      id="password"
+                      aria-describedby="password-hint"
                       className="input"
                       type="password"
                       name="password"
-                      placeholder="eg: ••••••••"
                       onChange={this.handleChange}
                     />
                   </div>
                   {this.state.errors.password && <small className="help is-danger">{this.state.errors.password}</small>}
                 </div>
                 <div className="field">
-                  <label className="label">Password Confirmation</label>
+                  <label className="label" htmlFor="password-confirmation">Password Confirmation</label>
+                  <p className="help" id="password-confirmation-hint"> Enter the same password
+                  </p>
                   <div className="control">
                     <input
+                      id="password-confirmation"
+                      aria-describedby="password-confirmation-hint"
                       className="input"
                       type="password"
                       name="password_confirmation"
-                      placeholder="eg: ••••••••"
                       onChange={this.handleChange}
                     />
                   </div>

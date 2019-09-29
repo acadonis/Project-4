@@ -5,9 +5,6 @@ import Select from 'react-select'
 import axios from 'axios'
 // import Autosuggest from 'react-autosuggest'
 
-
-
-
 class DestinationSearch extends React.Component {
   constructor(){
     super()
@@ -17,6 +14,7 @@ class DestinationSearch extends React.Component {
         airport: '',
         categories: []
       }
+
     }
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
     this.handleRatingChange = this.handleRatingChange.bind(this)
@@ -39,7 +37,7 @@ class DestinationSearch extends React.Component {
   }
 
   handleChange(e){
-    const formData = { ...this.state.formData, airport: e.target.value }
+    const formData = { ...this.state.formData, airport: e.target.value.toUpperCase() }
     this.setState({ formData })
   }
 
@@ -68,28 +66,46 @@ class DestinationSearch extends React.Component {
               <div className="columns is-multiline">
                 <div className="column is-half-desktop is-half-tablet">
                   <div className="field">
-                    <label className="label">Category</label>
-                    <Select
-                      value= {selectedCategory}
-                      options={this.state.categoryChoices}
-                      isMulti
-                      onChange={this.handleCategoryChange}
-                    />
+                    <label className="label" id="category">Category</label>
+                    <div className="control">
+                      <p className="help" id="category-hint"> Enter the category (can select more than one)
+                      </p>
+                      <Select
+                        id="category"
+                        aria-describedby="category-hints"
+                        value= {selectedCategory}
+                        options={this.state.categoryChoices}
+                        isMulti
+                        onChange={this.handleCategoryChange}
+                      />
+                    </div>
                   </div>
                   <div className="field">
-                    <label className="label">Cost</label>
-                    <Rating name='cost'
-                      initialRating={this.state.formData.cost}
-                      onChange={this.handleRatingChange}
-                    />
+                    <label className="label" id="cost">Cost</label>
+                    <div className="control">
+                      <p className="help" id="cost-hint"> Enter the cost from 1 (least expensive) to 5 (most expensive)
+                      </p>
+                      <Rating name='cost'
+                        id="cost"
+                        aria-describedby="cost-hint"
+                        initialRating={this.state.formData.cost}
+                        onChange={this.handleRatingChange}
+                      />
+                    </div>
                   </div>
                   <div className="field">
-                    <label className="label">Starting Airport</label>
-                    <input
-                      type="text"
-                      placeholder="Please use IATA code e.g. LHR for London Heathrow!" className="input"
-                      onChange={this.handleChange}
-                    />
+                    <label className="label" id="airport">Starting Airport</label>
+                    <div className="control">
+                      <p className="help" id="airport-hint">Enter your starting airport IATA code, e.g. LAX for Los Angeles International</p>
+                      <input
+                        id="airport"
+                        aria-describedby="airport-hint"
+                        type="text"
+                        className="input is-uppercase"
+                        onChange={this.handleChange}
+                        maxLength = "3"
+                      />
+                    </div>
                   </div>
                   <button className="button" type="submit" disabled={!isEnabled}>Go!</button>
                 </div>
