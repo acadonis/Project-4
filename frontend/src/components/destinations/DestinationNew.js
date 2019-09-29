@@ -26,11 +26,18 @@ class DestinationNew extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleRatingChange = this.handleRatingChange.bind(this)
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
+    this.handleChangeAirport = this.handleChangeAirport.bind(this)
 
   }
 
   handleChange(e) {
     const formData = { ...this.state.formData, [e.target.name]: e.target.value }
+    const errors = { ...this.state.errors, [e.target.name]: '' }
+    this.setState({ formData, errors })
+  }
+
+  handleChangeAirport(e) {
+    const formData = { ...this.state.formData, [e.target.name]: e.target.value.toUpperCase() }
     const errors = { ...this.state.errors, [e.target.name]: '' }
     this.setState({ formData, errors })
   }
@@ -107,9 +114,10 @@ class DestinationNew extends React.Component {
                     <input
                       id="airport"
                       aria-describedby="airport-hints"
-                      className="input"
+                      className="input is-uppercase"
+                      maxLength="3"
                       name="airport"
-                      onChange={this.handleChange}
+                      onChange={this.handleChangeAirport}
                     />
                   </div>
                   {this.state.errors.airport && <small className="help is-danger">{this.state.errors.airport}</small>}

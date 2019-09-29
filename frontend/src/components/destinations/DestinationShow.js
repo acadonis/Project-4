@@ -27,7 +27,7 @@ class DestinationShow extends React.Component {
   // }
   componentDidMount(){
 
-    return axios.get('/api/destinations/' + this.props.match.params.id + '/')
+    return axios.get(`/api/destinations/${this.props.match.params.id}`)
       .then(res => {
         const airport = res.data.airport
         return axios.get('/api/carbonkit', {
@@ -37,7 +37,6 @@ class DestinationShow extends React.Component {
           }
         })
           .then(carbonRes => {
-            console.log(carbonRes.data)
             res.data.carbon = Math.round(carbonRes.data.output.amounts[1].value)
 
             this.setState({
@@ -76,7 +75,7 @@ class DestinationShow extends React.Component {
                     onClick= {this.deleteDestination}
                   >Delete</button>}
                   {Auth.isCurrentUser(user) &&
-                    <Link to="/destinations/edit"
+                    <Link to={`/destinations/${this.state.destination.id}/edit`}
                       className="button is-active"
                     >Edit</Link>
                   }

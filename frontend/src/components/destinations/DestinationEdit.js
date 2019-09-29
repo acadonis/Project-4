@@ -5,7 +5,7 @@ import axios from 'axios'
 import Auth from '../../lib/Auth'
 
 
-class DestinationNew extends React.Component {
+class DestinationEdit extends React.Component {
 
   constructor() {
     super()
@@ -23,6 +23,7 @@ class DestinationNew extends React.Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleChangeAirport = this.handleChangeAirport.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleRatingChange = this.handleRatingChange.bind(this)
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
@@ -35,6 +36,12 @@ class DestinationNew extends React.Component {
     this.setState({ formData, errors })
   }
 
+  handleChangeAirport(e) {
+    const formData = { ...this.state.formData, [e.target.name]: e.target.value.toUpperCase() }
+    const errors = { ...this.state.errors, [e.target.name]: '' }
+    this.setState({ formData, errors })
+  }
+
   handleSubmit(e) {
     e.preventDefault()
 
@@ -42,7 +49,7 @@ class DestinationNew extends React.Component {
       ...this.state.formData
     }
 
-    axios.post('/api/destinations/', formData, {
+    axios.put(`/api/destinations/${this.props.match.params.id}/`, formData, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
       .then(res => this.props.history.push(`${res.data.id}`))
@@ -56,30 +63,41 @@ class DestinationNew extends React.Component {
   }
 
   handleCategoryChange(selectedCategory) {
-
     const formData = { ...this.state.formData, categories: (selectedCategory || []).map(option => option.value) }
-
+    console.log(selectedCategory)
     this.setState({ formData })
   }
 
   componentDidMount() {
     axios.get('/api/categories/')
-      .then(res => this.setState({
-        categoryChoices: res.data.map(option => ({ label: option.name, value: option.id }))
-      }))
+      .then(res => {
+        const categoryChoices = res.data.map(option => ({ label: option.name, value: option.id }))
+
+        return axios.get(`/api/destinations/${this.props.match.params.id}`)
+          .then(destRes =>
+            this.setState({
+              categoryChoices: categoryChoices,
+              formData: destRes.data
+            })
+          )
+      })
   }
 
+
   render() {
-    console.log(this.state)
+
     const { name, airport, country, image, cost, categories, description} = this.state.formData
+
     const isEnabled = name !== '' && airport !== '' && country !== '' && image !== '' && cost !== null && categories !== [] && description !== ''
 
     const { selectedCategory } = this.state
 
+    console.log(this.state)
+
     return (
       <section className="section">
         <div className="container">
-          <h2 className="title is-3">Make a Destination!</h2>
+          <h2 className="title is-3">Edit your Destination!</h2>
           <form onSubmit={this.handleSubmit}>
             <div className="columns is-multiline">
               <div className="column is-half-desktop is-half-tablet">
@@ -94,6 +112,7 @@ class DestinationNew extends React.Component {
                       className="input"
                       name="name"
                       onChange={this.handleChange}
+                      value={this.state.formData.name}
                     />
                   </div>
                   {this.state.errors.name && <small className="help is-danger">{this.state.errors.name}</small>}
@@ -106,9 +125,11 @@ class DestinationNew extends React.Component {
                     <input
                       id="airport"
                       aria-describedby="airport-hints"
-                      className="input"
+                      className="input is-uppercase"
                       name="airport"
-                      onChange={this.handleChange}
+                      onChange={this.handleChangeAirport}
+                      maxLength = "3"
+                      value={this.state.formData.airport}
                     />
                   </div>
                   {this.state.errors.airport && <small className="help is-danger">{this.state.errors.airport}</small>}
@@ -124,6 +145,7 @@ class DestinationNew extends React.Component {
                       className="input"
                       name="country"
                       onChange={this.handleChange}
+                      value={this.state.formData.country}
                     />
                     {this.state.errors.country && <small className="help is-danger">{this.state.errors.country}</small>}
                   </div>
@@ -139,6 +161,7 @@ class DestinationNew extends React.Component {
                       className="input"
                       name="image"
                       onChange={this.handleChange}
+                      value={this.state.formData.image}
                     />
                   </div>
                   {this.state.errors.image && <small className="help is-danger">{this.state.errors.image}</small>}
@@ -153,6 +176,7 @@ class DestinationNew extends React.Component {
                       aria-describedby="cost-hint"
                       initialRating={this.state.formData.cost}
                       onChange={this.handleRatingChange}
+                      value={this.state.formData.cost}
                     />
                   </div>
                   {this.state.errors.cost && <small className="help is-danger">{this.state.errors.cost}</small>}
@@ -165,13 +189,13 @@ class DestinationNew extends React.Component {
                     <Select
                       id="category"
                       aria-describedby="category-hint"
-                      value={selectedCategory}
                       options={this.state.categoryChoices}
                       isMulti
                       onChange={this.handleCategoryChange}
+                      value={selectedCategory}
                     />
                   </div>
-                  {this.state.errors.categories && <small className="help is-danger">{this.state.errors.categories}</small>}
+                  {this.state.errors.categories && <small className="help is-danger">Enter the category (can select more than one)</small>}
                 </div>
                 <div className="field">
                   <label className="label" id="description">Description</label>
@@ -184,6 +208,7 @@ class DestinationNew extends React.Component {
                       className="textarea"
                       name="description"
                       onChange={this.handleChange}
+                      value={this.state.formData.description}
                     />
                   </div>
                   {this.state.errors.description && <small className="help is-danger">{this.state.errors.description}</small>}
@@ -198,4 +223,4 @@ class DestinationNew extends React.Component {
   }
 }
 
-export default DestinationNew
+export default DestinationEdit

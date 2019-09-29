@@ -26,7 +26,7 @@ class App extends React.Component {
         <ToastContainer position="bottom-right" hideProgressBar={true} />
         <Switch>
           <Route path="/destinations/new" component={DestinationNew} />
-          <Route path="/destinations/edit" component={DestinationEdit} />
+          <Route path="/destinations/:id/edit" component={DestinationEdit} />
           <Route path="/destinations/:categories/:cost/:airport" component={DestinationIndex} />
           <Route path="/destinations/:id/:airport" component={DestinationShow} />
           <Route path="/destinations/:id/" component={DestinationShow} />
