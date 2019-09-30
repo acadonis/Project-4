@@ -4,6 +4,7 @@ import Auth from '../../lib/Auth'
 
 
 
+
 class Navbar extends React.Component {
   constructor(){
     super()
@@ -37,7 +38,7 @@ class Navbar extends React.Component {
           <div className="navbar-brand">
             <div className="navbar-item">
               <div>
-                <img src={require('./airplane.png')} alt="Plane Logo"/>
+                <img src={require('./plane.jpg')} alt="Plane Logo"/>
               </div>
             </div>
             <Link to= "/"
