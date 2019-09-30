@@ -36,11 +36,6 @@ class Navbar extends React.Component {
       <nav className="navbar is-fixed-top is-success">
         <div className="container">
           <div className="navbar-brand">
-            <div className="navbar-item">
-              <div>
-                <img src={require('./plane.jpg')} alt="Plane Logo"/>
-              </div>
-            </div>
             <Link to= "/"
               className="navbar-item"> Low Carbon Europe
             </Link>
@@ -106,3 +101,10 @@ class Navbar extends React.Component {
 
 
 export default withRouter(Navbar)
+
+
+// <div className="navbar-item">
+//   <div>
+//     <img src={require('./airplane.png')} alt="Plane Logo"/>
+//   </div>
+// </div>
