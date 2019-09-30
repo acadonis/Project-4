@@ -37,7 +37,7 @@ class Navbar extends React.Component {
           <div className="navbar-brand">
             <div className="navbar-item">
               <div>
-                <img src={require('./airplane.png')} alt="Plane Logo"/>
+                <img src="airplane.png" alt="Plane Logo"/>
               </div>
             </div>
             <Link to= "/"
