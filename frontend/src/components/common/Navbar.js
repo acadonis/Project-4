@@ -39,7 +39,6 @@ class Navbar extends React.Component {
             <Link to= "/"
               className="navbar-item"> Low Carbon Europe
             </Link>
-
             <a role="button"
               className={`navbar-burger ${this.state.navbarOpen ? 'is-active' : ''} ` }
               onClick={this.toggleNavbar}>
