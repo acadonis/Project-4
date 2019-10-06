@@ -61,41 +61,101 @@ I commenced the project by setting up the requiste Git and Github, before moving
 
 I previously found the Model-Template-View framework of Django a little confusing, coming from the Model-View-Controller design pattern of Express, so I took my time to understand the conceptual differences, as well as the similarities. 
 
-In particular, I started the project using the Django Rest Framework (DRF) generic views for full REST functionality, however removed these later on when they could not provide the flexibility I required around nesting models within models. 
+Having done so, I created the Django project folder, and then the destinations app within this to contain the required Django back-end content. 
 
-Nesting became a recurring problem during the implementation of the Django back-end, with problems with recursion in the serialisers when looking to nest the destinations in the user AND the user in the destinations (similarly for categories and holidays. As such, I ended up implementing  
+I started the project using the Django Rest Framework (DRF) generic views for full REST functionality, however removed these later on when they could not provide the flexibility I required around nesting models within models. 
 
-
-
-
-After this initial start, we split the building of the app into independent tasks and listed these on our Trello board, utilising a MoSCoW categorisation for must have, should have, could have and won't have. 
-
-My main contribution to the build were the new happenings create page and the main index page displaying the happenings. 
-
-### New happening create page
-
-The new happening create page is a key part of the site, allowing users to create a new happenings. As we had decided a happening could belong to more than one category, I implemented a react-select input control to achieve this.
+Nesting became a recurring problem during the implementation of the Django back-end, with problems with recursion in the serialisers when looking to nest the destinations in the user AND the user in the destinations (similarly for categories and holidays. As such, I ended up implementing different serialisers for the same models based on whether these needed to be populated with the nested models, if so ensuring there was not infinite recursion. Similarly, different serializers are used in the different views based on the RESTful route in question:
 
 
-```Javascript
- <div className="field">
-   <label className="label">Category</label>
-   <Select
-     value= {selectedCategories}
-     options={categories}
-     isMulti
-     onChange={this.handleCategoryChange}
-   />
-   {this.state.errors.categories && <small className="help is-danger">{this.state.errors.categories}</small>}
- </div>
- 
-=========================================
-                
-handleCategoryChange(selectedCategories) {
-    const formData = { ...this.state.formData, categories: selectedCategories ? selectedCategories.map(option => option.value) : [] }
-    this.setState({ formData })
-}
+```Python
+
+# views.py extract
+
+ class DestinationList(APIView):
+
+    def get(self, _request):
+        destinations = Destination.objects.all()
+        serializer = PopulatedDestinationSerializer(destinations, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = DestinationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            destination = serializer.instance
+            serializer = PopulatedDestinationSerializer(destination)
+            return Response(serializer.data, status=HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+        
+==========================================================================
+#serialisers.py extract
+
+ class DestinationSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Destination
+        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'user', 'categories',)
+
+class PopulatedDestinationSerializer(serializers.ModelSerializer):
+
+    categories = CategorySerializer(many=True, read_only=True)
+
+    class Meta(DestinationSerializer.Meta):
+        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
 ```
+
+Once the models, views and serialisers were implemented, I then proceeded to populate the database with test data and users, using the in-built Django site administration tools and the DRF to test the back-end setup. Having to migrate when making changes to the models was a new feature compared to Express and unexpectedly time consuming when this effectively resulted in having to reseed the data; as such I found the use of a fixtures json file early on of great assistance. 
+
+### React Setup
+
+Having the back-end functioning and accessible through the built-in features Django and DRF, I then proceeded to hook this up to the React front end, using a separate front-end app. The project urls point to the front-end app, which in turn opens the index.html and loads the React route DOM node. This is one aspect of the project I intent to research further, as while I understand the concept of the various steps undertaken to link React to the back-end, I am uncertain over the actual implementation in places.
+
+For the implementation of the React front-end, I built on my existing experience using components such as react-select, and the styling framework Bulma to add additional functionality and a consistant styling across the site, while avoiding a "fussy" screen with too much content and always keeping a mobile-first design approach. 
+
+Error handling and form guidance was something I found myself focusing on in the design, as part of my desire to have a clear user experience. I also concentrated on data validation, using both back-end and front-end methods to ensure that the user could only enter valid data, and was aware of what the requirements were. 
+
+* Associating the various element of a form input correctly, using htmlFor and id, 
+
+
+
+In particular, in researching good front-end form design was extremely interested in this article:
+
+
+
+regarding placeholder text, which influenced my decision to remove placeholders and replace them with help paragraph classes, with aria-describedby used for screenreader support for the required input. 
+
+```Python
+
+# models.py - use of model validators
+
+from django.core.validators import RegexValidator
+
+alphanumeric = RegexValidator(r'^[A-Z]*$', 'Only capital letters are allowed.')
+
+airport = models.CharField(max_length=3, null=True, validators=[alphanumeric])
+        
+==========================================================================
+# DestinationNew.js
+
+ class DestinationSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Destination
+        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'user', 'categories',)
+
+class PopulatedDestinationSerializer(serializers.ModelSerializer):
+
+    categories = CategorySerializer(many=True, read_only=True)
+
+    class Meta(DestinationSerializer.Meta):
+        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
+```
+
+
 
 This resulted in a change to the category property of the happening model from a string to an array of strings to incorporate the { label: categories, value: categories } structure required by react-select. As this was a change to the underlying models I ensured I talked through this change with other members of the team so they were aware of it.  
 
