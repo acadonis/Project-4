@@ -1,49 +1,46 @@
 # GA Project 4: Low Carbon Travel - A Django and React stack app 
 
-To be completed shortly. Development is still in progress, in the interim pleasee see the current deployment version of the app here:
-
-[LowCarbonTravel](https://project-4-destinations.herokuapp.com/#/)
-
-//WIP
-
 ### Link
 
-[Happening](https://project-3-happening.herokuapp.com/#/)
+[Low Carbon Travel](https://project-4-destinations.herokuapp.com/#/)
 
 ### Brief
 
-Working in a group of 4, we were tasked with building a Mongoose, Express, React and Node.js (MERN) full-stack application from scratch. 
+Working individually, I was tasked with building a full-stack application using a Python Django API, with Django REST Framework to serve data from an SQLite database, and consuming this with a separate front-end built in React. 
 
 Key deliverables were as follows:
 
-* Build a full-stack MERN application
-* Use an Express API to serve data from a Mongo database
-* Consume your API with a separate front-end built with React
+* Build a full-stack Python Django API and React application
 * Be a complete product, requiring multiple relationships and Create Read Update and Delete (CRUD)  functionality for at least two models
 * Have a visually impressive design
-* Have automated tests for RESTful resources on the back-end
-
-### Overview & concept of the project
-
-Having been allocated our group, we spent several hours discussed what kind of app we wished to build, and who it would serve. Several of the group were not from London, and the topic of knowing where to go in London for particular interests, plus finding people who shared these interests, came up. 
-
-While we were aware that apps such as Meetup and websites such as Time Out provide a similar service, we felt this type of app was a good opportunity to showcase our skills, given the function requirements for both events and users.
-
-Once the idea had been settled upon, the name came quickly. Realising that "event" is a variable set by browsers when an event handler is called, we decided to come up with a new description for use in the code, and happening was agreed on. Given the double meaning, this was quickly adopted as the overall title of the app.
-
-From the outset we wanted a stylish and attractive app which would draw users in and make them engage with the events, and as such visual design was given a high priority. 
+* Be deployed online
+* Have automated tests for at least one RESTful resources on the back-end
 
 ### Technologies used
 
-Mongoose, Express, React, Node.js, MongoDB, axios, Bulma, HTML5, ES6, CSS 3, SASS, Git, Github
+Django, Python, SQLite, React, JavaScript, Bulma, HTML5, ES6, CSS 3, SASS, Yarn, Git, Github
+
+### Timeframe
+
+7 days
+
+### Overview & concept of the project
+
+Having worked in groups for projects 2 and 3, I decided to tackle this project as a solo one, to help reinforce the full range of techniquies I had learned already throughout the course.
+
+I took time to decide on a concept, considering several possibilities (such as a London historic buildings finder) before settling on a holiday destination app. This offered the opportunity to have visually attractive content, together with allowing me to focus on the technical aspects by having a clear and simple idea for the content. 
+
+In order to give this a unique selling point, I decdied to focus on the emerging trend for lower carbon holidays, and as such I decided to investigate 3rd party APIs for calculating the carbon of trips. 
+
+A mobile-first design approach was also a goal from the outset, having not had the opportunity in my previous projects to truly pursue this. My design thinking has continued to evolve towards a "less is more" approach, and I wanted to have a very clean design which was truly easy to use on mobile.
+
+I also decided to minimise features in order to maximise the continuity of design across the site, given the timeframes in question. As discussed below, timeframes still proved to be an issue, but I consider this approach was correct in any event. 
 
 ### Approach taken
 
 ## Planning
 
-After agreeing the concept of the project, we spent an afternoon planning the app using wireframes:
-
-<img src="your image" style="transform:rotate(90deg);">
+I took time to plan the user story for the site, deciding that the user would want a simple search functionality to allow them to almost immediately start browsing holiday desinations, together with the more complex CRUD functionality once they were registered and logged in. 
 
 We also talked through the process of collaborative working on github, reminding ourselves to work on a new branch for each feature and merge this frequently (once tested), with the main development branch.
 
