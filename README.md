@@ -115,17 +115,18 @@ Having the back-end functioning and accessible through the built-in features Dja
 
 For the implementation of the React front-end, I built on my existing experience using components such as react-select, and the styling framework Bulma to add additional functionality and a consistant styling across the site, while avoiding a "fussy" screen with too much content and always keeping a mobile-first design approach. 
 
+### User experience and forms
+
 Error handling and form guidance was something I found myself focusing on in the design, as part of my desire to have a clear user experience. I also concentrated on data validation, using both back-end and front-end methods to ensure that the user could only enter valid data, and was aware of what the requirements were. 
-
-* Associating the various element of a form input correctly, using htmlFor and id, 
-
-
 
 In particular, in researching good front-end form design was extremely interested in this article:
 
+[Don't Use the Placeholder Attribute](https://www.smashingmagazine.com/2018/06/placeholder-attribute/)
 
+regarding placeholder text, which influenced my decision to remove placeholders and replace them with help paragraph classes, with aria-describedby used for screenreader support for the required input. I also ensured that the form labels and inputs were correctly associated, using htmlFor and id.
 
-regarding placeholder text, which influenced my decision to remove placeholders and replace them with help paragraph classes, with aria-describedby used for screenreader support for the required input. 
+Examples:
+
 
 ```Python
 
@@ -138,21 +139,32 @@ alphanumeric = RegexValidator(r'^[A-Z]*$', 'Only capital letters are allowed.')
 airport = models.CharField(max_length=3, null=True, validators=[alphanumeric])
         
 ==========================================================================
-# DestinationNew.js
+# DestinationNew.js - input validation
 
- class DestinationSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+<div className="field">
+     <label className="label" htmlFor="airport">Airport</label>
+     <p className="help" id="airport-hint"> Enter the IATA airport code, e.g. LAX for Los Angeles International
+     </p>
+     <div className="control">
+       <input
+         id="airport"
+         aria-describedby="airport-hints"
+         className="input is-uppercase"
+         maxLength="3"
+         name="airport"
+         onChange={this.handleChangeAirport}
+       />
+     </div>
+     {this.state.errors.airport && <small className="help is-danger">{this.state.errors.airport}</small>}
+ </div>
+ 
+ ==============
+ 
+ # DestinationSearch.js - button disabling until inputs entered
+ 
+const isEnabled = categories.length > 0 && cost !== '' && airport !== ''
 
-    class Meta:
-        model = Destination
-        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'user', 'categories',)
-
-class PopulatedDestinationSerializer(serializers.ModelSerializer):
-
-    categories = CategorySerializer(many=True, read_only=True)
-
-    class Meta(DestinationSerializer.Meta):
-        fields = ('id', 'name', 'airport', 'country', 'longitude', 'latitude', 'cost', 'image', 'description', 'categories', 'user',)
+<button className="button" type="submit" disabled={!isEnabled}>Go!</button>
 ```
 
 
