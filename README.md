@@ -4,6 +4,8 @@
 
 [Low Carbon Travel](https://project-4-destinations.herokuapp.com/#/)
 
+### Installation Instructions
+
 ### Brief
 
 Working individually, I was tasked with building a full-stack application using a Python Django API, with Django REST Framework to serve data from an SQLite database, and consuming this with a separate front-end built in React. 
@@ -18,7 +20,7 @@ Key deliverables were as follows:
 
 ### Technologies used
 
-Django, Python, SQLite, React, JavaScript, Bulma, HTML5, ES6, CSS 3, SASS, Yarn, Git, Github
+Django, Python, SQLite, React, JavaScript, Axios, Bulma, HTML5, ES6, CSS 3, SASS, Yarn, Git, Github
 
 ### Timeframe
 
@@ -56,7 +58,6 @@ My research into 3rd party APIs led me to [CarbonKit.net](https://docs.carbonkit
 
 I commenced the project by setting up the requiste Git and Github, before moving onto the backend setup with Django. 
 
-
 ### Django Setup
 
 I previously found the Model-Template-View framework of Django a little confusing, coming from the Model-View-Controller design pattern of Express, so I took my time to understand the conceptual differences, as well as the similarities. 
@@ -66,7 +67,6 @@ Having done so, I created the Django project folder, and then the destinations a
 I started the project using the Django Rest Framework (DRF) generic views for full REST functionality, however removed these later on when they could not provide the flexibility I required around nesting models within models. 
 
 Nesting became a recurring problem during the implementation of the Django back-end, with problems with recursion in the serialisers when looking to nest the destinations in the user AND the user in the destinations (similarly for categories and holidays. As such, I ended up implementing different serialisers for the same models based on whether these needed to be populated with the nested models, if so ensuring there was not infinite recursion. Similarly, different serializers are used in the different views based on the RESTful route in question:
-
 
 ```Python
 
@@ -127,7 +127,6 @@ regarding placeholder text, which influenced my decision to remove placeholders 
 
 Examples:
 
-
 ```Python
 
 # models.py - use of model validators
@@ -167,70 +166,12 @@ const isEnabled = categories.length > 0 && cost !== '' && airport !== ''
 <button className="button" type="submit" disabled={!isEnabled}>Go!</button>
 ```
 
+### CarbonKit API
+
+The CarbonKit API model chosen requires a GET request containing the two IATA airport codes, which will return a range of values relating to carbon and other emissions that can then be displayed to the user. Originally I had intended for this to show on the index page of the destinations after a user had searched, and enable sorting by lowest amount, however this quickly proved complex involve batch requests for multiple airports. As such, I abandoned this approach (the correct decision in my opinion and 
 
 
-This resulted in a change to the category property of the happening model from a string to an array of strings to incorporate the { label: categories, value: categories } structure required by react-select. As this was a change to the underlying models I ensured I talked through this change with other members of the team so they were aware of it.  
 
-Users are required to be logged into the site to create a happening, and a Toastify warning presents if they try to proceed when not logged in, together with a redirect to the login or register page:
-
-```Javascript
-<SecureRoute path="/happenings/new" component={HappeningNew} />
-      
-============================================
-      
-router.route('/happenings/')
-  .get(happeningsController.index)
-  .post(secureRoute, happeningsController.create)
-============================================
-const SecureRoute = (props) => {
-  if(Auth.isAuthenticated()) return <Route {...props} />
-  toast.error('You need to log in to perform this action')
-  return <Redirect to="/login" />
-}
-```
-## Happening Index Page
-
-The Happening index page was required to have 5 sections of happenings grouped by categories, with two larger event placeholders and three smaller ones. The layout of the section was relatively straightforward, using components with Bulma card classes, however the challenge was to adhere to DRY principles and avoid duplication of code.
-
-To this end I built an index section functional component, which was used by the main index classical component to generate the 5 sections. Firstly the intial axios get was sliced, to return results in 5 categories, and then these results were further sliced to return 5 happenings per category. 
-
-Once set to state, the results are mapped over in the render and spread to the Happening index section, which produces the required layout per category. 
-
-```Javascript
-componentDidMount() {
-    axios.get('/api/happenings')
-      .then(res => {
-        const results = categories.slice(0,5).map(category => {
-          return {
-            name: category.value,
-            happenings: res.data.filter(happening => happening.categories.includes(category.value)).slice(0,5)
-          }
-        })
-        this.setState({ results })
-      })
-  }
-  render() {
-    return (
-      <section className="section">
-        <div className="container">
-          {!this.state.results && <h2 className="title is-2">Loading...</h2>}
-          {this.state.results && this.state.results.map((result, i) =>
-            <div key={i}>
-              <HappeningIndexSection
-                {...result}
-              />
-              <LazyHero
-                ransitionTimingFunction="ease-in-out" isFixed={true}
-                imageSrc="https://unsplash.it/2000/1000" minHeight="10vh">
-                <h1>Happening</h1>
-              </LazyHero>
-            </div>
-          )}
-        </div>
-      </section>
-    )
-  }
-```
 
 ### Styling
 
