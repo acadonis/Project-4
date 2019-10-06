@@ -42,19 +42,31 @@ I also decided to minimise features in order to maximise the continuity of desig
 
 I took time to plan the user story for the site, deciding that the user would want a simple search functionality to allow them to almost immediately start browsing holiday desinations, together with the more complex CRUD functionality once they were registered and logged in. 
 
-I therefore centered the model design on the destination, with a many-to-one relationship between the in-built Django user model and the destination. I also added a further category model in a many-to-many relationship with the destination model, in order to facilitate better grouping and searching of the destinations. I spent a good amount of time researching Entity Relationship Diagrams for planning out table relationships in relational databases such as SQLite, which was a considerable difference to my previous experience with the NoSQL MongoDB.
+I therefore centered the model design on the destination, with a many-to-one relationship between the in-built Django user model and the destination (noting that Django does not actually provide for a one-to-many relationship). I also added a further category model in a many-to-many relationship with the destination model, in order to facilitate better grouping and searching of the destinations. I spent a good amount of time researching Entity Relationship Diagrams for planning out table relationships in relational databases such as SQLite, which was a considerable difference to my previous experience with the NoSQL MongoDB.
 
 For page design, I wanted simple effective navigation, and decided early on against having an index page of all available holidays, to then be filtered down. I wanted the use to proactively enter their requirements before seeing any results; as such I designed the search page to request key information, which the user then has to submit before returning results. Having used as-you-type dynamic filtering on my previous projects, I feel that using a form to submit information, which not necessarily looking as impressive, is often a better design solution. 
 
 For index and show, given the mobile first approach, I wanted simple, consistently formatted text and pictures which displayed well on mobile. I decided to use Bulma to achieve this, given its in-built responsiveness and excellent formatting and spacing qualities. It also saved time, which on a time limited project like this was a real consideration. 
 
-In order 
+In order to manage the workflow of the project, I set up a Trello board with cards for discrete tasks. Unlike in previous projects I did not mark these individually using the MoSCoW methodology, as the cards represented the MVP of the project.
 
-Trello - MVP
+My research into 3rd party APIs led me to [CarbonKit.net](https://docs.carbonkit.net/), which has an excellently documented API for a whole range of carbon calculators. I decided to use their Great Circle flight methodology model which calculates the carbon for a flight between two airports, as it would allow the user to enter an easy input (the IATA code for an airport) and be returned a unique calcuaton of the carbon of their trip.
 
 ## Implementation
 
-We commenced by working together as a group, building the models to be used, agreeing routing and other basic requirements for the app. Once completed, we built a barebones front-end to check that we had a full-stack application working. 
+I commenced the project by setting up the requiste Git and Github, before moving onto the backend setup with Django. 
+
+
+### Django Setup
+
+I previously found the Model-Template-View framework of Django a little confusing, coming from the Model-View-Controller design pattern of Express, so I took my time to understand the conceptual differences, as well as the similarities. 
+
+In particular, I started the project using the Django Rest Framework (DRF) generic views for full REST functionality, however removed these later on when they could not provide the flexibility I required around nesting models within models. 
+
+Nesting became a recurring problem during the implementation of the Django back-end, with problems with recursion in the serialisers when looking to nest the destinations in the user AND the user in the destinations (similarly for categories and holidays. As such, I ended up implementing  
+
+
+
 
 After this initial start, we split the building of the app into independent tasks and listed these on our Trello board, utilising a MoSCoW categorisation for must have, should have, could have and won't have. 
 
