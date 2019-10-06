@@ -42,11 +42,15 @@ I also decided to minimise features in order to maximise the continuity of desig
 
 I took time to plan the user story for the site, deciding that the user would want a simple search functionality to allow them to almost immediately start browsing holiday desinations, together with the more complex CRUD functionality once they were registered and logged in. 
 
-We also talked through the process of collaborative working on github, reminding ourselves to work on a new branch for each feature and merge this frequently (once tested), with the main development branch.
+I therefore centered the model design on the destination, with a many-to-one relationship between the in-built Django user model and the destination. I also added a further category model in a many-to-many relationship with the destination model, in order to facilitate better grouping and searching of the destinations. I spent a good amount of time researching Entity Relationship Diagrams for planning out table relationships in relational databases such as SQLite, which was a considerable difference to my previous experience with the NoSQL MongoDB.
 
-We then identified those features which were core MVP and those which we could cut out, setting up a Trello board with key tasks. We also identified the "foundation" tasks which had to be done before we would effectively work independently on key components. 
+For page design, I wanted simple effective navigation, and decided early on against having an index page of all available holidays, to then be filtered down. I wanted the use to proactively enter their requirements before seeing any results; as such I designed the search page to request key information, which the user then has to submit before returning results. Having used as-you-type dynamic filtering on my previous projects, I feel that using a form to submit information, which not necessarily looking as impressive, is often a better design solution. 
 
-These tasks included agreeing the models for happenings and users, routing, and common Bulma card components we would use across the site to display event and user information. 
+For index and show, given the mobile first approach, I wanted simple, consistently formatted text and pictures which displayed well on mobile. I decided to use Bulma to achieve this, given its in-built responsiveness and excellent formatting and spacing qualities. It also saved time, which on a time limited project like this was a real consideration. 
+
+In order 
+
+Trello - MVP
 
 ## Implementation
 
