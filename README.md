@@ -136,8 +136,11 @@ from django.core.validators import RegexValidator
 alphanumeric = RegexValidator(r'^[A-Z]*$', 'Only capital letters are allowed.')
 
 airport = models.CharField(max_length=3, null=True, validators=[alphanumeric])
-        
+
+```
 ==========================================================================
+
+```Javascript
 # DestinationNew.js - input validation
 
 <div className="field">
@@ -168,57 +171,66 @@ const isEnabled = categories.length > 0 && cost !== '' && airport !== ''
 
 ### CarbonKit API
 
-The CarbonKit API model chosen requires a GET request containing the two IATA airport codes, which will return a range of values relating to carbon and other emissions that can then be displayed to the user. Originally I had intended for this to show on the index page of the destinations after a user had searched, and enable sorting by lowest amount, however this quickly proved complex involve batch requests for multiple airports. As such, I abandoned this approach (the correct decision in my opinion and 
+The CarbonKit API model chosen requires a GET request containing the two IATA airport codes, which will return a range of values relating to carbon and other emissions that can then be displayed to the user. Originally I had intended for this to show on the index page of the destinations after a user had searched, and enable sorting by lowest amount, however this quickly proved complex involve batch requests for multiple airports and issue around the sequencing of axios requests. 
 
+As such, I reversed this approach and decided to make the request on the show page for individual destination, the correct decision in my view given the timeframe of the project. The search airport is fed through to the show page using params, the desintation airport extracted from the destination response, these passed to the API and the result displayed:
 
+```Python
+componentDidMount(){
 
+    return axios.get(`/api/destinations/${this.props.match.params.id}`)
+      .then(res => {
+        const airport = res.data.airport
+        return axios.get('/api/carbonkit', {
+          params: {
+            'values.IATAcode1': this.props.match.params.airport,
+            'values.IATAcode2': airport
+          }
+        })
+          .then(carbonRes => {
+            res.data.carbon = Math.round(carbonRes.data.output.amounts[1].value)
+
+            this.setState({
+              destination: res.data
+            })
+          })
+
+      })
+  }
+```
 
 ### Styling
 
-Styling was achieved primarily though the use of a Bulma template, Lux from Bulmaswatch. This was introduced by agreement early on in the project, which meant that members of the group were able to style their components with the confidence that these would not deviate signifcantly from other people's styliny. 
+I used vanilla Bulma styling for the site, given a coherant, modern overall look in an efficient amount of time. The clear, bold styling is intended to present the user with only the information they require, and minimises general screen clutter. The mobile-first approach works well with this type of design, with responsiveness added in for tablet and desktop sizes but with the primary focus on clean, clear mobile experience.  
 
-At the end of the project minimal tweaks were required to the overall styling to give single visual identity to the app, and this was in a large part due to the use of the template at an early stage.
-
-As with my second project, we felt that, although there was a signficant amount of information to display, an uncluttered apporach was still best. Given the subject matter of events and enjoying yourself, we gave images prominance on the site, as these often grab a user's interest more than text. 
-
-Parallex effects were used where we felt it added to the visual appeal of the page, such as on the Index with React-lazy-hero:
-```Javascript
-<LazyHero
-  ransitionTimingFunction="ease-in-out" isFixed={true}
-  imageSrc="https://unsplash.it/2000/1000" minHeight="10vh">
-  <h1>Happening</h1>
-</LazyHero>
-```
-The styling delivers a professional looking website, and I think suits the subject matter of the app.
+The project logo (placed in the navbar) unfortunately suffered an encoding issue when deploying to Heroku, which proved tricky to solve and is a current outstanding issue. This detracts more signifanctly from the design then I had anticipated, but is a good lesson in how apparently small changes to design can have a major impact, especially on websites with an intentionally minimal feel. 
 
 ### Finished product
 
-The app at the end of the project delivered a large amount of functionality, from the ability to look up and add events to the creation of a user profile, and the ability to follow other users and see what events they were attending. This took us well past our MVP, and I am happy with the final result. 
+I am extremely happy with the app as finished. Not only was this built with technologies some of which I had only been introduced to two weeks beforehand, but the overall consistency of the design and functionality (especially on the inputs) was a core goal which I feel I achieved.  
 
 ### Wins and Blockers
 
 #### Wins:
-* The DRY nature of the Happening index page, which uses a relatively small amount of code to reuse a functional component and build the main index page. This was a specific goal from my previous project. 
+* The design of the input pages, their usability and error reporting. 
 
-* Learning how to work effectively in a group of developers and using github for version control.
-
-* Using react-select to implement the selection of multiple categories.
-
+* The use of a third party API in a considered and practical way, which enhances the user experience and gives the app something unique.
 
 #### Blockers:
 
-* Currently the categories on the index page do not return unique results, if a happening has more than one category assigned, and so duplicates will show. 
+* Making batch requests to CarbonKit to enable a more effective comparison of destination by carbon output. 
 
--- Continue* 
+* An encoding issue with the site logo on deployment to Heroku
+
 
 ### Future features
 
-* Introduce the ability to search by multiple ingredients 
-* A comparison function to compare cocktails
-* Making the prepopulated searches use a single component. 
+* Comparison of destinations by carbon / calcuation of carbon savings between destinations
+* More destination data
+
 
 ### Learning points (tech & soft skills)
-
+----
 #### Methodology
 Working in a group development team was excellent practice in teamwork and communcation skills. Making decisions together and having regular standups with the team required a cooperate approach, and planning the required task using Trello cards was an invaluable aid.
 
