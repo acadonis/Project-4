@@ -50,7 +50,7 @@ For page design, I wanted simple effective navigation, and decided early on agai
 
 For index and show, given the mobile first approach, I wanted simple, consistently formatted text and pictures which displayed well on mobile. I decided to use Bulma to achieve this, given its in-built responsiveness and excellent formatting and spacing qualities. It also saved time, which on a time limited project like this was a real consideration. 
 
-In order to manage the workflow of the project, I set up a Trello board with cards for discrete tasks. Unlike in previous projects I did not mark these individually using the MoSCoW methodology, as the cards represented the MVP of the project.
+In order to manage the workflow of the project, I set up a Trello board with cards for discrete tasks. Unlike in previous projects I did not mark these individually using the MoSCoW methodology, as the cards represented the MVP of the project. This is discussed further in the learning points section below.
 
 My research into 3rd party APIs led me to [CarbonKit.net](https://docs.carbonkit.net/), which has an excellently documented API for a whole range of carbon calculators. I decided to use their Great Circle flight methodology model which calculates the carbon for a flight between two airports, as it would allow the user to enter an easy input (the IATA code for an airport) and be returned a unique calcuaton of the carbon of their trip.
 
@@ -108,6 +108,9 @@ class PopulatedDestinationSerializer(serializers.ModelSerializer):
 ```
 
 Once the models, views and serialisers were implemented, I then proceeded to populate the database with test data and users, using the in-built Django site administration tools and the DRF to test the back-end setup. Having to migrate when making changes to the models was a new feature compared to Express and unexpectedly time consuming when this effectively resulted in having to reseed the data; as such I found the use of a fixtures json file early on of great assistance. 
+
+Authentication is handled using JSON Web Token (JWT), not supported out of the box by Django, so I wrote a new app to handle authentication, hooked into the main project settings.py, and custom serialisers and views to handle user registration and login. Unsafe access to destinations for users that do not own a record is currently prevented through the front-end and the hiding of the links to these features if a user is not authenticated or is authenticated but does not match the create user. While this works for now, adding in the built in permissions from Django REST Framework on the back end is a to-do for the app to provide proper CRUD control.
+
 
 ### React Setup
 
@@ -226,17 +229,23 @@ I am extremely happy with the app as finished. Not only was this built with tech
 ### Future features
 
 * Comparison of destinations by carbon / calcuation of carbon savings between destinations
+
+* CRUD authentication with Django permissions, currently handled through front-end button display which is not ideal. 
 * More destination data
+* Automated testing
 
 
 ### Learning points (tech & soft skills)
 ----
 #### Methodology
-Working in a group development team was excellent practice in teamwork and communcation skills. Making decisions together and having regular standups with the team required a cooperate approach, and planning the required task using Trello cards was an invaluable aid.
+Taking on a full stack project on my own was enjoyable, however delivering MVP in the timeframe allocated proved a challenge. As such, I ended the week period with a proof of concept product which I then tailored over the next several weeks to the fully fledged app. 
+
+This was an excellent reminder that planning adequate contingency time into a project is key, together with having a simple MVP which can then be built upon later. My original MVP for the project, which I felt was the most basic possible, could have been stripped down further to deliver a full, if basic app within the week timeframe. 
+
+Planning the relationships in a relational database was a new and interesting challenge, and reading around this and ERD usage was a worthwhile exercise.
 
 #### Technical
-The project allowed me to further develop my React skills, and become more comfortable with using React packages (such as React-Select), which are an excellent way to give additional functionality to an app without taking large amounts of time. 
+The big technical challenge in the project I found  was moving from the Express MVC to the Django MTV design pattern, which led to the back-end design taking longer than I had anticipated. Furthermore, changes to this were not as intuitive as with Express, which added further time to the back end design. 
 
-Greater understanding of the interation between functional and classical components, together with setting state with data from axios requests before iterating over this data allowed me to solve a complex techincal challenge which was immensly satisying.
 
 
