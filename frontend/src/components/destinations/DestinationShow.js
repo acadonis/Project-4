@@ -21,10 +21,6 @@ class DestinationShow extends React.Component {
       .then(() => this.props.history.push('/'))
   }
 
-  // componentDidMount(){
-  // return axios.get('/api/destinations/' + this.props.match.params.id + '/')
-  //   .then(res => this.setState({ destination: res.data }))
-  // }
   componentDidMount(){
 
     return axios.get(`/api/destinations/${this.props.match.params.id}`)
