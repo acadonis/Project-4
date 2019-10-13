@@ -6,7 +6,17 @@
 
 [Low Carbon Travel](https://project-4-destinations.herokuapp.com/#/)
 
-### Installation Instructions
+### Installation 
+
+Fork the repository
+
+Clone the repository down to your local system
+
+Install pipenv with in the terminal: *pip install pipenv*
+
+Run pipenv in your local repository: *pipenv shell*
+
+Run *yarn* in the terminal to install dependencies
 
 ### Brief
 
@@ -22,7 +32,7 @@ Key deliverables were as follows:
 
 ### Technologies used
 
-Django, Python, SQLite, React, JavaScript, Axios, Bulma, HTML5, ES6, CSS 3, SASS, Yarn, Git, Github
+Django, Python, SQLite, React, JavaScript, Axios, Bulma, HTML5, ES6, CSS 3, SASS, Yarn, pipenv, Git, Github
 
 ### Timeframe
 
@@ -30,11 +40,11 @@ Django, Python, SQLite, React, JavaScript, Axios, Bulma, HTML5, ES6, CSS 3, SASS
 
 ### Overview & concept of the project
 
-Having worked in groups for projects 2 and 3, I decided to tackle this project as a solo one, to help reinforce the full range of techniquies I had learned already throughout the course.
+Having worked in groups for projects 2 and 3, I decided to tackle this project as a solo one, to help reinforce the full range of techniques I had learned already throughout the course.
 
 I took time to decide on a concept, considering several possibilities (such as a London historic buildings finder) before settling on a holiday destination app. This offered the opportunity to have visually attractive content, together with allowing me to focus on the technical aspects by having a clear and simple idea for the content. 
 
-In order to give this a unique selling point, I decdied to focus on the emerging trend for lower carbon holidays, and as such I decided to investigate 3rd party APIs for calculating the carbon of trips. 
+In order to give this a unique selling point, I decided to focus on the emerging trend for lower carbon holidays, and as such I decided to investigate 3rd party APIs for calculating the carbon of trips. 
 
 A mobile-first design approach was also a goal from the outset, having not had the opportunity in my previous projects to truly pursue this. My design thinking has continued to evolve towards a "less is more" approach, and I wanted to have a very clean design which was truly easy to use on mobile.
 
@@ -44,7 +54,7 @@ I also decided to minimise features in order to maximise the continuity of desig
 
 ## Planning
 
-I took time to plan the user story for the site, deciding that the user would want a simple search functionality to allow them to almost immediately start browsing holiday desinations, together with the more complex CRUD functionality once they were registered and logged in. 
+I took time to plan the user story for the site, deciding that the user would want a simple search functionality to allow them to almost immediately start browsing holiday destinations, together with the more complex CRUD functionality once they were registered and logged in. 
 
 I therefore centered the model design on the destination, with a many-to-one relationship between the in-built Django user model and the destination (noting that Django does not actually provide for a one-to-many relationship). I also added a further category model in a many-to-many relationship with the destination model, in order to facilitate better grouping and searching of the destinations. I spent a good amount of time researching Entity Relationship Diagrams for planning out table relationships in relational databases such as SQLite, which was a considerable difference to my previous experience with the NoSQL MongoDB.
 
@@ -54,11 +64,11 @@ For index and show, given the mobile first approach, I wanted simple, consistent
 
 In order to manage the workflow of the project, I set up a Trello board with cards for discrete tasks. Unlike in previous projects I did not mark these individually using the MoSCoW methodology, as the cards represented the MVP of the project. This is discussed further in the learning points section below.
 
-My research into 3rd party APIs led me to [CarbonKit.net](https://docs.carbonkit.net/), which has an excellently documented API for a whole range of carbon calculators. I decided to use their Great Circle flight methodology model which calculates the carbon for a flight between two airports, as it would allow the user to enter an easy input (the IATA code for an airport) and be returned a unique calcuaton of the carbon of their trip.
+My research into 3rd party APIs led me to [CarbonKit.net](https://docs.carbonkit.net/), which has an excellently documented API for a whole range of carbon calculators. I decided to use their Great Circle flight methodology model which calculates the carbon for a flight between two airports, as it would allow the user to enter an easy input (the IATA code for an airport) and be returned a unique calculaton of the carbon of their trip.
 
 ## Implementation
 
-I commenced the project by setting up the requiste Git and Github, before moving onto the backend setup with Django. 
+I commenced the project by setting up the requisite Git and Github, before moving onto the backend setup with Django. 
 
 ### Django Setup
 
@@ -118,7 +128,7 @@ Authentication is handled using JSON Web Token (JWT), not supported out of the b
 
 Having the back-end functioning and accessible through the built-in features Django and DRF, I then proceeded to hook this up to the React front end, using a separate front-end app. The project urls point to the front-end app, which in turn opens the index.html and loads the React route DOM node. This is one aspect of the project I intent to research further, as while I understand the concept of the various steps undertaken to link React to the back-end, I am uncertain over the actual implementation in places.
 
-For the implementation of the React front-end, I built on my existing experience using components such as react-select, and the styling framework Bulma to add additional functionality and a consistant styling across the site, while avoiding a "fussy" screen with too much content and always keeping a mobile-first design approach. 
+For the implementation of the React front-end, I built on my existing experience using components such as react-select, and the styling framework Bulma to add additional functionality and a consistent styling across the site, while avoiding a "fussy" screen with too much content and always keeping a mobile-first design approach. 
 
 ### User experience and forms
 
@@ -178,7 +188,7 @@ const isEnabled = categories.length > 0 && cost !== '' && airport !== ''
 
 The CarbonKit API model chosen requires a GET request containing the two IATA airport codes, which will return a range of values relating to carbon and other emissions that can then be displayed to the user. Originally I had intended for this to show on the index page of the destinations after a user had searched, and enable sorting by lowest amount, however this quickly proved complex involve batch requests for multiple airports and issue around the sequencing of axios requests. 
 
-As such, I reversed this approach and decided to make the request on the show page for individual destination, the correct decision in my view given the timeframe of the project. The search airport is fed through to the show page using params, the desintation airport extracted from the destination response, these passed to the API and the result displayed:
+As such, I reversed this approach and decided to make the request on the show page for individual destination, the correct decision in my view given the timeframe of the project. The search airport is fed through to the show page using params, the destination airport extracted from the destination response, these passed to the API and the result displayed:
 
 ```Python
 componentDidMount(){
@@ -206,9 +216,9 @@ componentDidMount(){
 
 ### Styling
 
-I used vanilla Bulma styling for the site, given a coherant, modern overall look in an efficient amount of time. The clear, bold styling is intended to present the user with only the information they require, and minimises general screen clutter. The mobile-first approach works well with this type of design, with responsiveness added in for tablet and desktop sizes but with the primary focus on clean, clear mobile experience.  
+I used vanilla Bulma styling for the site, given a coherent, modern overall look in an efficient amount of time. The clear, bold styling is intended to present the user with only the information they require, and minimises general screen clutter. The mobile-first approach works well with this type of design, with responsiveness added in for tablet and desktop sizes but with the primary focus on clean, clear mobile experience.  
 
-The project logo (placed in the navbar) unfortunately suffered an encoding issue when deploying to Heroku, which proved tricky to solve and is a current outstanding issue. This detracts more signifanctly from the design then I had anticipated, but is a good lesson in how apparently small changes to design can have a major impact, especially on websites with an intentionally minimal feel. 
+The project logo (placed in the Navbar) unfortunately suffered an encoding issue when deploying to Heroku, which proved tricky to solve and is a current outstanding issue. This detracts more significantly from the design than I had anticipated, but is a good lesson in how apparently small changes to design can have a major impact, especially on websites with an intentionally minimal feel. 
 
 ### Finished product
 
@@ -230,7 +240,7 @@ I am extremely happy with the app as finished. Not only was this built with tech
 
 ### Future features
 
-* Comparison of destinations by carbon / calcuation of carbon savings between destinations
+* Comparison of destinations by carbon / calculation of carbon savings between destinations
 
 * CRUD authentication with Django permissions, currently handled through front-end button display which is not ideal. 
 * More destination data
