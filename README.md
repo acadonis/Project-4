@@ -1,5 +1,7 @@
 # GA Project 4: Low Carbon Travel - A Django and React stack app 
 
+<img src="./readme/readmescreen.jpg" width="100%" alt="Low Carbon page">
+
 ### Link
 
 [Low Carbon Travel](https://project-4-destinations.herokuapp.com/#/)
@@ -89,7 +91,7 @@ Nesting became a recurring problem during the implementation of the Django back-
 
         return Response(serializer.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
         
-==========================================================================
+================================================
 #serialisers.py extract
 
  class DestinationSerializer(serializers.ModelSerializer):
@@ -235,7 +237,7 @@ I am extremely happy with the app as finished. Not only was this built with tech
 * Automated testing
 
 
-### Learning points (tech & soft skills)
+### Learning points
 ----
 #### Methodology
 Taking on a full stack project on my own was enjoyable, however delivering MVP in the timeframe allocated proved a challenge. As such, I ended the week period with a proof of concept product which I then tailored over the next several weeks to the fully fledged app. 
