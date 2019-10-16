@@ -126,7 +126,7 @@ Authentication is handled using JSON Web Token (JWT), not supported out of the b
 
 ### React Setup
 
-Having the back-end functioning and accessible through the built-in features Django and DRF, I then proceeded to hook this up to the React front end, using a separate front-end app. The project urls point to the front-end app, which in turn opens the index.html and loads the React route DOM node. This is one aspect of the project I intent to research further, as while I understand the concept of the various steps undertaken to link React to the back-end, I am uncertain over the actual implementation in places.
+Having the back-end functioning and accessible through the built-in features Django and DRF, I then proceeded to hook this up to the React front end, using a separate front-end app. The project urls point to the front-end app, which in turn opens the index.html and loads the React route DOM node. 
 
 For the implementation of the React front-end, I built on my existing experience using components such as react-select, and the styling framework Bulma to add additional functionality and a consistent styling across the site, while avoiding a "fussy" screen with too much content and always keeping a mobile-first design approach. 
 
