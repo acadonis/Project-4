@@ -12,7 +12,7 @@ Fork the repository
 
 Clone the repository down to your local system
 
-Install pipenv with in the terminal: *pip install pipenv*
+Install pipenv in the terminal: *pip install pipenv*
 
 Run pipenv in your local repository: *pipenv shell*
 
