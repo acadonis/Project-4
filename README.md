@@ -134,7 +134,7 @@ For the implementation of the React front-end, I built on my existing experience
 
 Error handling and form guidance was something I found myself focusing on in the design, as part of my desire to have a clear user experience. I also concentrated on data validation, using both back-end and front-end methods to ensure that the user could only enter valid data, and was aware of what the requirements were. 
 
-In particular, in researching good front-end form design was extremely interested in this article:
+In particular, in researching good front-end form design I was extremely interested in this article:
 
 [Don't Use the Placeholder Attribute](https://www.smashingmagazine.com/2018/06/placeholder-attribute/)
 
