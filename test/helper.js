@@ -24,3 +24,6 @@ Object.defineProperties(global, props)
 
 global.window = window
 global.document = window.document
+global.navigator = {
+  userAgent: 'node.js'
+}
