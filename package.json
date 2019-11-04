@@ -8,7 +8,7 @@
     "serve:backend": "python manage.py runserver 4000",
     "serve:frontend": "webpack-dev-server",
     "seed": "python manage.py loaddata destinations/fixtures.json",
-    "test": "mocha --require test/helper.js --require ignore-styles test/**/*_spec.js"
+    "test": "mocha --require test/helper --require ignore-styles test/**/*_spec.js"
   },
   "dependencies": {
     "@babel/core": "^7.5.5",
@@ -26,6 +26,7 @@
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "js": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.12.0",
@@ -50,7 +51,7 @@
     "eslint": "^6.3.0",
     "eslint-plugin-react": "^7.14.3",
     "ignore-styles": "^5.0.1",
-    "jsdom": "^15.2.0",
+    "jsdom": "^15.2.1",
     "mocha": "^6.2.2",
     "sinon": "^7.5.0",
     "webpack-dev-server": "^3.8.0"
