@@ -32,7 +32,7 @@ Key deliverables were as follows:
 
 ### Technologies used
 
-Django, Python, SQLite, React, JavaScript, Axios, Bulma, HTML5, ES6, CSS 3, SASS, Yarn, pipenv, Git, Github
+Django, Python, SQLite, React, JavaScript ES6, Axios, Bulma, HTML5, CSS 3, SASS, Yarn, pipenv, Git, Github
 
 ### Timeframe
 
